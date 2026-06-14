@@ -212,17 +212,17 @@
         <div class="blog-header-sub">Catatan, tutorial, dan refleksi seputar dunia pengembangan web &amp; teknologi</div>
       </div>
     </div>
-    <div class="blog-layout">
-      <div class="blog-grid" id="blog-grid"></div>
-      <div class="post-detail" id="post-detail">
-        <div class="post-detail-header">
-          <button class="post-detail-back" onclick="closePost()"><i class="fas fa-arrow-left"></i> Kembali ke Blog</button>
-          <div class="post-detail-category" id="post-detail-category"></div>
-          <div class="post-detail-title" id="post-detail-title"></div>
-          <div class="post-detail-meta" id="post-detail-meta"></div>
-        </div>
-        <div class="post-detail-body" id="post-detail-body"></div>
+    <div class="blog-grid" id="blog-grid"></div>
+
+    <!-- POST DETAIL (inline, no modal) -->
+    <div class="post-detail" id="post-detail">
+      <div class="post-detail-header">
+        <button class="post-detail-back" onclick="closePost()"><i class="fas fa-arrow-left"></i> Kembali ke Blog</button>
+        <div class="post-detail-category" id="post-detail-category"></div>
+        <div class="post-detail-title" id="post-detail-title"></div>
+        <div class="post-detail-meta" id="post-detail-meta"></div>
       </div>
+      <div class="post-detail-body" id="post-detail-body"></div>
     </div>
   </div>
 </div>

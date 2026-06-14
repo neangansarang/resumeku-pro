@@ -23,7 +23,6 @@ function renderBlog() {
         <div class="blog-card-title">${p.title}</div>
         <div class="blog-card-excerpt">${p.excerpt}</div>
         <div class="blog-card-meta"><i class="far fa-calendar-alt"></i>${p.date} &nbsp;·&nbsp; <i class="far fa-clock"></i>${p.readTime}</div>
-        <button class="read-more-btn">Baca selengkapnya <i class="fas fa-arrow-right" style="font-size:9px"></i></button>
       </div>
     </div>`).join('');
 }
@@ -36,20 +35,24 @@ function openPost(i) {
   document.getElementById('post-detail-meta').innerHTML = `<span><i class="far fa-calendar-alt"></i> ${p.date}</span><span><i class="far fa-clock"></i> ${p.readTime} baca</span>`;
   document.getElementById('post-detail-body').innerHTML = p.content;
 
-  // Highlight active card, remove others
-  document.querySelectorAll('.blog-card').forEach((c, idx) => c.classList.toggle('active', idx === i));
+  // Highlight active card, hide others
+  document.querySelectorAll('.blog-card').forEach((c, idx) => {
+    c.classList.toggle('active', idx === i);
+    c.classList.toggle('hide-card', idx !== i);
+  });
 
   // Show panel
   const detail = document.getElementById('post-detail');
   detail.classList.add('open');
-
-  // Scroll to detail panel smoothly
-  setTimeout(() => detail.scrollIntoView({ behavior: 'smooth', block: 'start' }), 40);
+  document.querySelector('.blog-page').classList.add('has-detail');
 }
 
 function closePost() {
   document.getElementById('post-detail').classList.remove('open');
-  document.querySelectorAll('.blog-card').forEach(c => c.classList.remove('active'));
+  document.querySelector('.blog-page').classList.remove('has-detail');
+  document.querySelectorAll('.blog-card').forEach(c => {
+    c.classList.remove('active', 'hide-card');
+  });
   // Scroll back to grid
   document.getElementById('blog-grid').scrollIntoView({ behavior: 'smooth', block: 'start' });
 }
