@@ -118,7 +118,7 @@ Padding `36px 30px`, flex column dengan `gap: 24px`. Berisi section-section:
 | Header nama | `.main-header` | Nama besar (Inter, uppercase, 56px) + role/subtitle |
 | Profil | `.profile-text` | Paragraf deskripsi diri |
 | Pengalaman kerja | `.exp-item` | Role, perusahaan, bullet poin |
-| Pendidikan | `.edu-item` | Tahun, sekolah, gelar, IPK |
+| Pendidikan | `.edu-item` | Tahun (badge), Sekolah (uppercase, Inter, kiri-kanan), gelar, IPK |
 | Sertifikat | `.cert-grid > .cert-item` | Grid 2 kolom, ikon + nama + issuer |
 | Proyek | `.project-grid > .project-item` | Grid 2 kolom, nama + deskripsi + tags |
 
@@ -141,16 +141,23 @@ Padding `36px 30px`, flex column dengan `gap: 24px`. Berisi section-section:
 > `.exp-role` otomatis diubah ke **uppercase** via CSS (`text-transform: uppercase`).
 
 #### Template `edu-item` (pendidikan):
+
+Tahun pendidikan menggunakan style **badge** (sama seperti `.exp-period`). Nama institusi dan kota dipisah dalam `<span>` agar berada di kiri dan kanan:
+
 ```html
 <div class="edu-item">
   <div class="edu-year">YYYY – YYYY</div>
   <div>
-    <div class="edu-school">Nama Institusi · Kota</div>
+    <div class="edu-school"><span>NAMA INSTITUSI</span><span>KOTA</span></div>
     <div class="edu-degree">Program Studi / Jurusan</div>
     <div class="edu-gpa">IPK: X.XX / 4.00</div>
   </div>
 </div>
 ```
+
+> `.edu-year` otomatis tampil sebagai badge (background, border, padding, radius).
+> `.edu-school` menggunakan Inter, uppercase, dan `display: flex; justify-content: space-between` untuk posisi kiri-kanan.
+> Inner `<div>` konten diberi `flex: 1` agar "KOTA" berada di ujung kanan.
 
 #### Template `cert-item` (sertifikat):
 ```html
@@ -278,6 +285,8 @@ Tag HTML yang didukung di dalam `content`:
 | Shadow kartu CV | `--shadow` di `.cv-card` |
 | Garis section | `::after` pseudo-element pada `.main-section-title` dan `.sidebar-section-title` |
 | Skill bar fill | `<div class="skill-fill" style="width:XX%">` — warna `--sage` |
+| Badge tahun (pendidikan & kerja) | `.edu-year` dan `.exp-period` (background, border, padding, border-radius) |
+| Kota di kanan (pendidikan) | `.edu-school` dengan `display: flex; justify-content: space-between` |
 
 ---
 
@@ -312,7 +321,7 @@ Ketika ingin mengupdate CV, periksa urutan ini:
 - [ ] **Skill bar:** `width:%` di setiap `.skill-fill`
 - [ ] **Kemampuan:** `.ability-tag` di sidebar
 - [ ] **Pengalaman:** `.exp-item` (terbaru di atas, hapus `<hr>` terakhir)
-- [ ] **Pendidikan:** `.edu-item`
+- [ ] **Pendidikan:** `.edu-item` (tahun badge, sekolah uppercase kiri-kanan, gelar, IPK)
 - [ ] **Sertifikat:** `.cert-item` di `.cert-grid`
 - [ ] **Proyek:** `.project-item` di `.project-grid`
 - [ ] **Blog:** tambah/edit objek di array `posts` di `js/script.js`
