@@ -10,10 +10,16 @@
 </head>
 <body>
 
-<div class="nav-tabs">
-  <button class="nav-tab active" onclick="switchPage('cv', event)"><i class="fas fa-id-card" style="font-size:16px;"></i> Curriculum Vitae</button>
-  <button class="nav-tab" onclick="switchPage('blog', event)"><i class="fas fa-pen-nib" style="font-size:16px;"></i> Blog &amp; Tulisan</button>
-</div>
+<nav class="navbar">
+  <div class="nav-brand">
+    <span class="icon">+</span>
+    <span>RESUMEKU</span>
+  </div>
+  <div class="nav-links">
+    <button class="nav-link active" onclick="switchPage('cv', event)">CURRICULUM VITAE</button>
+    <button class="nav-link" onclick="switchPage('blog', event)">BLOG & TULISAN</button>
+  </div>
+</nav>
 
 <!-- CV PAGE -->
 <div id="page-cv" class="page active">
@@ -160,7 +166,7 @@
           <div class="edu-item">
             <div class="edu-year">2013 – 2017</div>
             <div>
-              <div class="edu-school"><span>Universitas Telkom</span><span>Bandung</span></div>
+              <div class="edu-school"><span>Universitas Telkom</span><span class="edu-year">Bandung</span></div>
               <div class="edu-degree">S1 Teknik Informatika</div>
               <div class="edu-gpa">IPK Akhir: 3.72 / 4.00 &nbsp;·&nbsp; Cumlaude</div>
             </div>
@@ -168,7 +174,7 @@
           <div class="edu-item">
             <div class="edu-year">2010 – 2013</div>
             <div>
-              <div class="edu-school"><span>SMK Negeri 4</span><span>Bandung</span></div>
+              <div class="edu-school"><span>SMK Negeri 4</span><span class="edu-year">Bandung</span></div>
               <div class="edu-degree">Rekayasa Perangkat Lunak (RPL)</div>
               <div class="edu-gpa">Nilai rata-rata: 87.5 &nbsp;·&nbsp; Lulusan Terbaik</div>
             </div>
@@ -199,6 +205,46 @@
 
       </div>
     </div>
+
+    <!-- RIGHT CARD: ACHIEVEMENT -->
+    <div class="cv-card-right">
+      <div class="right-section">
+        <div class="right-section-title"><i class="fas fa-trophy"></i> Penghargaan & Sertifikasi</div>
+        <div class="achieve-item">
+          <div class="achieve-icon"><i class="fas fa-medal"></i></div>
+          <div class="achieve-body">
+            <div class="achieve-title">Best Developer Award 2024</div>
+            <div class="achieve-meta">PT Tech Innovasi · 2024</div>
+            <div class="achieve-desc">Penghargaan atas kontribusi dalam pengembangan platform digital perusahaan yang meningkatkan efisiensi tim sebesar 40%.</div>
+          </div>
+        </div>
+        <div class="achieve-item">
+          <div class="achieve-icon"><i class="fas fa-certificate"></i></div>
+          <div class="achieve-body">
+            <div class="achieve-title">AWS Certified Cloud Practitioner</div>
+            <div class="achieve-meta">Amazon Web Services · 2023</div>
+            <div class="achieve-desc">Sertifikasi fundamental cloud computing yang mencakup arsitektur AWS, layanan inti, pricing, dan best practices keamanan.</div>
+          </div>
+        </div>
+        <div class="achieve-item">
+          <div class="achieve-icon"><i class="fas fa-trophy"></i></div>
+          <div class="achieve-body">
+            <div class="achieve-title">Juara 1 Hackathon Nasional 2023</div>
+            <div class="achieve-meta">Kemenkominfo · 2023</div>
+            <div class="achieve-desc">Tim pengembang aplikasi smart farming berbasis IoT yang berhasil mengatasi permasalahan ketahanan pangan di daerah terpencil.</div>
+          </div>
+        </div>
+        <div class="achieve-item">
+          <div class="achieve-icon"><i class="fas fa-certificate"></i></div>
+          <div class="achieve-body">
+            <div class="achieve-title">Google Project Management Certificate</div>
+            <div class="achieve-meta">Google / Coursera · 2023</div>
+            <div class="achieve-desc">Pelatihan manajemen proyek dengan pendekatan Agile, Scrum, serta penggunaan tools seperti Jira dan Asana.</div>
+          </div>
+        </div>
+      </div>
+    </div>
+    
   </div>
 </div>
 

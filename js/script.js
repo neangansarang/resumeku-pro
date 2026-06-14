@@ -1,6 +1,6 @@
 function switchPage(p, e) {
   document.querySelectorAll('.page').forEach(el => el.classList.remove('active'));
-  document.querySelectorAll('.nav-tab').forEach(el => el.classList.remove('active'));
+  document.querySelectorAll('.nav-link').forEach(el => el.classList.remove('active'));
   document.getElementById('page-' + p).classList.add('active');
   e.currentTarget.classList.add('active');
 }
