@@ -6,12 +6,16 @@ Dokumen ini mendeskripsikan struktur, konvensi, dan cara maintain proyek ini sec
 
 ## 1. Gambaran Umum
 
-Proyek ini adalah **single-page CV + Blog** berbasis HTML murni dengan CSS dan JavaScript yang dipisahkan ke folder terpisah (tidak ada framework eksternal selain Google Fonts dan Font Awesome). Terdiri dari dua halaman yang bisa diswitch via tab navigasi:
+Proyek ini adalah **single-page CV + Blog** berbasis HTML murni dengan CSS dan JavaScript yang dipisahkan ke folder terpisah (tidak ada framework eksternal selain Google Fonts dan Font Awesome). Terdiri dari dua halaman yang bisa diswitch via navbar:
 
-| Tab | ID Halaman | Deskripsi |
-|-----|------------|-----------|
-| Curriculum Vitae | `#page-cv` | CV dua-kolom (sidebar + main) |
+| Menu | ID Halaman | Deskripsi |
+|------|------------|-----------|
+| Curriculum Vitae | `#page-cv` | CV dua-kolom (sidebar + main) + right card achievement |
 | Blog & Tulisan | `#page-blog` | Grid kartu blog dengan detail inline |
+
+**Navigasi:** Navbar sticky (`position: sticky; top: 20px; z-index: 100`) dengan logo "AS" di kiri, menu di kanan.
+
+**Fade transisi:** Setiap pindah halaman ada animasi `fadeIn` (opacity 0→1, translateY 10px→0).
 
 ---
 
@@ -25,7 +29,7 @@ Proyek ini adalah **single-page CV + Blog** berbasis HTML murni dengan CSS dan J
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 ```
 
-- **Inter** → font utama (body, label, tombol, nama utama di header)
+- **Inter** → font utama (body, label, tombol, nama utama di header, post-detail-title)
 - **Lora** → font serif untuk sidebar name dan beberapa heading
 - **Font Awesome 6.5** → semua ikon (`fas`, `fab`, `far`)
 
@@ -71,15 +75,21 @@ Semua warna dikelola melalui CSS custom properties di `:root`. **Jangan hardcode
 ## 4. Struktur Layout CV
 
 ```
-.book-wrapper (max-width: 880px, centered)
-└── .cv-card (CSS Grid: 248px | 1fr)
-    ├── .sidebar        ← kolom kiri
-    └── .cv-main        ← kolom kanan
+body (padding: 32px 272px, background #e4e0d8 + watermark SVG)
+└── .navbar (sticky, logo "AS" kiri, menu kanan)
+└── .page.active (#page-cv atau #page-blog)
+    ├── #page-cv
+    │   └── .book-wrapper (flex, gap 28px)
+    │       ├── .cv-card (CSS Grid: 248px | 1fr, width: 880px, flex-shrink: 0)
+    │       │   ├── .sidebar        ← kolom kiri
+    │       │   └── .cv-main        ← kolom kanan
+    │       └── .cv-card-right (flex: 1, achievement cards)
+    └── #page-blog
 ```
 
 ### 4a. Sidebar (`.sidebar`)
 
-Lebar tetap **248px**, background `--sidebar-bg`. Berisi bagian-bagian berikut secara vertikal:
+Lebar tetap **248px** (dalam grid `.cv-card`), background `--sidebar-bg`. Berisi bagian-bagian berikut secara vertikal:
 
 | Bagian | Struktur HTML | Cara Edit |
 |--------|---------------|-----------|
@@ -191,6 +201,14 @@ Tahun pendidikan menggunakan style **badge** (sama seperti `.exp-period`). Nama 
 ```
 > `::after` pseudo-element otomatis menambah garis pembatas horizontal.
 
+### 4c. Right Card (`.cv-card-right`)
+
+Card di sebelah kanan `.cv-card` (dalam `.book-wrapper` flex). Mengisi sisa lebar (`flex: 1`). Berisi:
+
+- **Penghargaan & Sertifikasi** — `.achieve-item` (icon + title + meta + desc)
+- **Bahasa** — `.skill-item` (sama style dengan sidebar)
+- **Minat** — `.interest-tags > .interest-tag` (pill shape)
+
 ---
 
 ## 5. Struktur Blog
@@ -201,8 +219,17 @@ Tahun pendidikan menggunakan style **badge** (sama seperti `.exp-period`). Nama 
 #page-blog
 └── .blog-page
     ├── .blog-header          ← judul + subtitle
-    ├── #blog-grid            ← diisi otomatis oleh JavaScript
-    └── #post-detail          ← panel detail artikel (toggle .open)
+    ├── .blog-layout (flex)
+    │   ├── .blog-grid        ← diisi otomatis oleh JavaScript
+    │   └── .post-detail-wrap
+    │       ├── .post-detail  ← panel detail artikel
+    │       │   ├── .post-detail-header
+    │       │   │   ├── .post-detail-close  ← tombol X (absolute top-right)
+    │       │   │   ├── .post-detail-category
+    │       │   │   ├── .post-detail-title  ← font Inter, 22px
+    │       │   │   └── .post-detail-meta
+    │       │   └── .post-detail-body
+    │       └── (tidak ada tombol back di sini)
 ```
 
 ### 5b. Data Artikel (JavaScript)
@@ -211,8 +238,8 @@ Semua konten artikel disimpan dalam array `posts` di `js/script.js`. Setiap obje
 
 ```javascript
 {
-  emoji: '⚡',                    // emoji thumbnail kartu
-  category: 'Tutorial',           // label kategori
+  img: 'src/images/blog-xxx.svg',    // gambar thumbnail
+  category: 'Tutorial',               // label kategori
   title: 'Judul Artikel',
   excerpt: 'Ringkasan singkat...',
   date: '10 Juni 2025',
@@ -228,7 +255,7 @@ Semua konten artikel disimpan dalam array `posts` di `js/script.js`. Setiap obje
 const posts = [
   // ... artikel lama ...
   {
-    emoji: '🚀',
+    img: 'src/images/blog-xxx.svg',
     category: 'Tutorial',
     title: 'Judul Artikel Baru',
     excerpt: 'Ringkasan artikel...',
@@ -257,40 +284,89 @@ Tag HTML yang didukung di dalam `content`:
 | Fungsi | Tugas |
 |--------|-------|
 | `renderBlog()` | Render semua kartu blog ke `#blog-grid` |
-| `openPost(i)` | Tampilkan detail artikel ke-`i`, scroll ke panel |
+| `openPost(i)` | Tampilkan detail artikel ke-`i`, toggle `.open` di `.post-detail-wrap`, hide card lain |
 | `closePost()` | Sembunyikan panel detail, scroll kembali ke grid |
-| `switchPage(p, e)` | Ganti halaman aktif (CV / Blog) |
+| `switchPage(p, e)` | Ganti halaman aktif (CV / Blog), update class `.active` di `.nav-link` |
 
 > `renderBlog()` dipanggil otomatis saat halaman dimuat.
+> `openPost()` toggle class `.open` di `.post-detail-wrap` (bukan `.post-detail`).
+
+### 5e. Blog Thumbnail Images
+
+Thumbnail blog disimpan sebagai file SVG di `src/images/`:
+
+| File | Topik |
+|------|-------|
+| `src/images/blog-react.svg` | Tutorial React |
+| `src/images/blog-docker.svg` | DevOps Docker |
+| `src/images/blog-security.svg` | Security API |
+| `src/images/blog-design.svg` | Design System |
+| `src/images/blog-career.svg` | Karir Developer |
+| `src/images/blog-ai.svg` | AI & Tech |
+
+Masing-masing SVG berisi gradien warna relevan dengan nama topik di tengah (font Open Sans).
 
 ---
 
-## 6. Navigasi Tab
+## 6. Navigasi Navbar
 
 ```html
-<button class="nav-tab active" onclick="switchPage('cv', event)">...</button>
-<button class="nav-tab" onclick="switchPage('blog', event)">...</button>
+<nav class="navbar">
+  <div class="nav-brand">AS</div>
+  <div class="nav-links">
+    <button class="nav-link active" onclick="switchPage('cv', event)"><i class="fas fa-id-card"></i> Curriculum Vitae</button>
+    <button class="nav-link" onclick="switchPage('blog', event)"><i class="fas fa-pen-nib"></i> Blog &amp; Tulisan</button>
+  </div>
+</nav>
 ```
 
-- Tab aktif mendapat class `.active` → background `--stone-800`, teks terang.
-- Untuk menambah halaman baru: buat `<div id="page-namabaru" class="page">`, lalu tambah tombol nav dengan `onclick="switchPage('namabaru', event)"`.
+**Styling:**
+- **`.navbar`** — `position: sticky; top: 20px; z-index: 100;` — tetap di atas saat scroll. Card putih dengan shadow, `justify-content: space-between`.
+- **`.nav-brand`** — Logo "AS" (inisial), Inter bold 22px, letter-spacing 1.5px.
+- **`.nav-link`** — Teks polos (tanpa border/background), color `--stone-400`. Active: `--stone-800` + `font-weight: 600`.
+
+Untuk menambah halaman baru:
+1. Buat `<div id="page-namabaru" class="page">`
+2. Tambah button di `.nav-links` dengan `onclick="switchPage('namabaru', event)"`
 
 ---
 
-## 7. Efek Visual
+## 7. Watermark Background
+
+Body memiliki watermark "RESUMEKU 2026" sebagai background:
+
+```css
+body {
+  background: #e4e0d8;
+  background-image: url("data:image/svg+xml,..."); /* SVG 1920×1080 grid 5×5 */
+  background-repeat: no-repeat;
+  background-size: cover;
+  background-attachment: fixed;
+  background-position: center;
+}
+```
+
+SVG berisi 25 teks "RESUMEKU 2026" dalam grid, font Open Sans, rotate -30°, opacity 0.3.
+
+---
+
+## 8. Efek Visual
 
 | Efek | Implementasi |
 |------|--------------|
-| Page-fold sudut kanan bawah | `.book-wrapper::after` dengan `clip-path: polygon` |
+| Fade transisi ganti halaman | `.page.active { animation: fadeIn .35s ease }` |
+| Page-fold sudut kanan bawah | `.cv-card::after` dengan `clip-path: polygon` |
 | Shadow kartu CV | `--shadow` di `.cv-card` |
 | Garis section | `::after` pseudo-element pada `.main-section-title` dan `.sidebar-section-title` |
 | Skill bar fill | `<div class="skill-fill" style="width:XX%">` — warna `--sage` |
 | Badge tahun (pendidikan & kerja) | `.edu-year` dan `.exp-period` (background, border, padding, border-radius) |
 | Kota di kanan (pendidikan) | `.edu-school` dengan `display: flex; justify-content: space-between` |
+| Navbar sticky | `position: sticky; top: 20px; z-index: 100` |
+| Tombol close X | `.post-detail-close` — absolute `top: 50%; right: 16px`, `transform: translateY(-50%)` |
 
 ---
 
-## 8. Foto Profil
+## 9. Foto Profil
 
 Foto profil menggunakan file `src/images/photo_profile.jpg` dengan class `.profile-photo`:
 
@@ -310,7 +386,7 @@ Untuk mengganti foto, cukup ganti file `src/images/photo_profile.jpg` dengan uku
 
 ---
 
-## 9. Checklist Maintenance
+## 10. Checklist Maintenance
 
 Ketika ingin mengupdate CV, periksa urutan ini:
 
@@ -324,11 +400,14 @@ Ketika ingin mengupdate CV, periksa urutan ini:
 - [ ] **Pendidikan:** `.edu-item` (tahun badge, sekolah uppercase kiri-kanan, gelar, IPK)
 - [ ] **Sertifikat:** `.cert-item` di `.cert-grid`
 - [ ] **Proyek:** `.project-item` di `.project-grid`
+- [ ] **Right card:** `.achieve-item`, `.interest-tag`, skill bar bahasa di `.cv-card-right`
 - [ ] **Blog:** tambah/edit objek di array `posts` di `js/script.js`
+- [ ] **Thumbnail blog:** buat file SVG di `src/images/blog-xxx.svg`
+- [ ] **Navbar:** update `.nav-link` jika ada halaman baru
 
 ---
 
-## 10. Struktur File Proyek
+## 11. Struktur File Proyek
 
 ```
 resume-asep/
@@ -339,14 +418,24 @@ resume-asep/
 │   └── script.js       ← Semua JavaScript (data blog, fungsi interaktif)
 ├── src/
 │   └── images/
-│       └── photo_profile.jpg  ← Foto profil
+│       ├── photo_profile.jpg   ← Foto profil
+│       ├── blog-react.svg      ← Thumbnail blog React
+│       ├── blog-docker.svg     ← Thumbnail blog Docker
+│       ├── blog-security.svg   ← Thumbnail blog Security
+│       ├── blog-design.svg     ← Thumbnail blog Design System
+│       ├── blog-career.svg     ← Thumbnail blog Career
+│       └── blog-ai.svg         ← Thumbnail blog AI & Tech
 └── SKILL.md            ← Dokumentasi ini
 ```
 
-## 11. Catatan Tambahan
+---
+
+## 12. Catatan Tambahan
 
 - Proyek ini bergantung pada Google Fonts dan Font Awesome (butuh koneksi internet untuk tampil sempurna).
 - CSS dan JavaScript sudah dipisahkan ke folder masing-masing (`css/` dan `js/`) untuk kemudahan maintenance.
 - Tidak ada JavaScript framework — semua manipulasi DOM menggunakan vanilla JS.
-- Untuk **print/PDF**: tambahkan `@media print { .nav-tabs { display: none; } #page-blog { display: none; } }` agar hanya CV yang tercetak.
+- Untuk **print/PDF**: tambahkan `@media print { .navbar { display: none; } #page-blog { display: none; } }` agar hanya CV yang tercetak.
 - Bahasa konten: **Indonesia** (`lang="id"`).
+- Watermark body menggunakan SVG data URI (tidak ada file eksternal).
+- Thumbnail blog dalam format SVG (dapat diganti PNG/JPG dengan mengganti path di data post).
