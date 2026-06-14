@@ -28,7 +28,7 @@
     font-family: 'Inter', sans-serif;
     background: #e4e0d8;
     min-height: 100vh;
-    padding: 32px 20px 64px;
+    padding: 32px 32px 32px;
     color: var(--text);
   }
 
@@ -89,8 +89,20 @@
   }
 
   .page { display: none; }
-  .page.active { display: block; }
-  #page-blog.page.active { display: flex; justify-content: flex-end; }
+  .page.active {
+    display: block;
+    animation: fadeIn .35s ease;
+  }
+  #page-blog.page.active {
+    display: flex;
+    justify-content: flex-end;
+    animation: fadeIn .35s ease;
+  }
+
+  @keyframes fadeIn {
+    from { opacity: 0; transform: translateY(10px); }
+    to   { opacity: 1; transform: translateY(0); }
+  }
 
   /* ── BOOK WRAPPER ── */
   .cv-card {
