@@ -349,8 +349,8 @@
     padding: 3px 9px;
     border-radius: 6px;
     border: 1px solid var(--stone-300);
-    color: var(--stone-600);
-    background: var(--white);
+    color: var(--stone-100);
+    background: var(--stone-800);
   }
 
   /* ── MAIN ── */
