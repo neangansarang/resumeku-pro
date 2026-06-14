@@ -211,7 +211,7 @@
   .ability-tag {
     font-size: 10px;
     padding: 3px 9px;
-    border-radius: 20px;
+    border-radius: 6px;
     border: 1px solid var(--stone-300);
     color: var(--stone-600);
     background: var(--white);
@@ -241,7 +241,7 @@
 
   .profile-text { font-size: 12.5px; color: var(--stone-600); line-height: 1.8; }
 
-  .main-header { border-bottom: 1px solid var(--stone-200); padding-bottom: 18px; }
+  .main-header { padding-bottom: 10px; }
   .main-header-name {
     font-family: 'Inter', sans-serif;
     font-size: 35px;
@@ -261,7 +261,7 @@
 
   /* Experience */
   .exp-item { margin-bottom: 16px; }
-  .exp-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1px; margin-bottom: 10px; }
+  .exp-header { display: flex; justify-content: space-between; align-items: flex-start; margin-bottom: 1px; margin-bottom: 3px; }
   .exp-role { font-size: 13px; font-weight: 600; color: var(--stone-800); text-transform: uppercase; }
   .exp-period {
     font-size: 10.5px;
