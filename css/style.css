@@ -34,6 +34,9 @@
 
   /* ── NAVBAR ── */
   .navbar {
+    position: sticky;
+    top: 20px;
+    z-index: 100;
     display: flex;
     align-items: center;
     justify-content: space-between;
@@ -41,7 +44,7 @@
     border-radius: 5px;
     box-shadow: var(--shadow);
     padding: 10px 22px;
-    margin-bottom: 25px;
+    margin-bottom: 28px;
   }
   .nav-brand {
     font-family: 'Inter', sans-serif;
@@ -162,6 +165,7 @@
     display: flex;
     gap: 13px;
     margin-bottom: 20px;
+    margin-top: 30px;
   }
   .achieve-icon {
     width: 34px;
