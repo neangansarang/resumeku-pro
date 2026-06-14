@@ -25,8 +25,8 @@ Proyek ini adalah **single-page CV + Blog** berbasis HTML murni dengan CSS dan J
 <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.5.0/css/all.min.css">
 ```
 
-- **Inter** → font utama (body, label, tombol)
-- **Lora** → font serif untuk nama dan heading utama
+- **Inter** → font utama (body, label, tombol, nama utama di header)
+- **Lora** → font serif untuk sidebar name dan beberapa heading
 - **Font Awesome 6.5** → semua ikon (`fas`, `fab`, `far`)
 
 ---
@@ -83,7 +83,7 @@ Lebar tetap **248px**, background `--sidebar-bg`. Berisi bagian-bagian berikut s
 
 | Bagian | Struktur HTML | Cara Edit |
 |--------|---------------|-----------|
-| Foto profil | `.photo-icon` (ikon `fa-user`) | Ganti `<i>` dengan `<img>` jika ada foto asli |
+| Foto profil | `.profile-photo` (gambar) | Ganti file `src/images/photo_profile.jpg` |
 | Nama | `.sidebar-name` | Edit teks langsung |
 | Jabatan | `.sidebar-title` | Edit teks langsung |
 | Kontak | `.contact-item` (icon + teks) | Duplikasi/hapus `.contact-item` |
@@ -115,7 +115,7 @@ Padding `36px 30px`, flex column dengan `gap: 24px`. Berisi section-section:
 
 | Section | Class section title | Isi |
 |---------|---------------------|-----|
-| Header nama | `.main-header` | Nama besar + role/subtitle |
+| Header nama | `.main-header` | Nama besar (Inter, uppercase, 56px) + role/subtitle |
 | Profil | `.profile-text` | Paragraf deskripsi diri |
 | Pengalaman kerja | `.exp-item` | Role, perusahaan, bullet poin |
 | Pendidikan | `.edu-item` | Tahun, sekolah, gelar, IPK |
@@ -138,6 +138,7 @@ Padding `36px 30px`, flex column dengan `gap: 24px`. Berisi section-section:
 ```
 
 > ⚠️ Hapus `<hr class="exp-divider">` pada item **terakhir** agar tidak ada garis berlebih.
+> `.exp-role` otomatis diubah ke **uppercase** via CSS (`text-transform: uppercase`).
 
 #### Template `edu-item` (pendidikan):
 ```html
@@ -280,19 +281,23 @@ Tag HTML yang didukung di dalam `content`:
 
 ---
 
-## 8. Cara Mengganti Foto Profil
+## 8. Foto Profil
 
-Saat ini foto menggunakan ikon placeholder:
-```html
-<div class="photo-icon"><i class="fas fa-user"></i></div>
-```
+Foto profil menggunakan file `src/images/photo_profile.jpg` dengan class `.profile-photo`:
 
-Untuk menggunakan foto asli:
 ```html
-<div class="photo-icon" style="padding:0; overflow:hidden;">
-  <img src="foto.jpg" alt="Nama" style="width:100%; height:100%; object-fit:cover; border-radius:50%;">
+<div class="profile-photo-wrap">
+  <img src="src/images/photo_profile.jpg" alt="Asep Septiadi" class="profile-photo">
 </div>
 ```
+
+**Spesifikasi CSS:**
+- Ukuran: `200px × 200px` (segiempat)
+- Sudut: `border-radius: 12px` (rounded)
+- Crop: `object-fit: cover`
+- Border: `2px solid var(--stone-300)`
+
+Untuk mengganti foto, cukup ganti file `src/images/photo_profile.jpg` dengan ukuran minimal 400×400px agar tajam.
 
 ---
 
@@ -300,7 +305,7 @@ Untuk menggunakan foto asli:
 
 Ketika ingin mengupdate CV, periksa urutan ini:
 
-- [ ] **Identitas:** nama di `.sidebar-name`, `.main-header-name`, dan `<title>`
+- [ ] **Identitas:** nama di `.sidebar-name`, `.main-header-name` (`<strong>ASEP</strong> SEPTIADI`), dan `<title>`
 - [ ] **Jabatan:** `.sidebar-title` dan `.main-header-role`
 - [ ] **Kontak:** 4x `.contact-item` (telepon, email, lokasi, website)
 - [ ] **Sosial:** 4x `.social-item` di `.social-grid`
@@ -323,6 +328,9 @@ resume-asep/
 │   └── style.css       ← Semua stylesheet
 ├── js/
 │   └── script.js       ← Semua JavaScript (data blog, fungsi interaktif)
+├── src/
+│   └── images/
+│       └── photo_profile.jpg  ← Foto profil
 └── SKILL.md            ← Dokumentasi ini
 ```
 
