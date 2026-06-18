@@ -625,3 +625,37 @@
     box-shadow: 0 6px 20px rgba(30,26,22,0.12);
   }
   .blog-card.hide-card { display: none; }
+
+  /* ── RESPONSIVE — TABLET & DESKTOP (skip mobile) ── */
+
+  @media (max-width: 1550px) {
+    body { padding: 32px 100px; }
+    .book-wrapper { flex-wrap: wrap; gap: 20px; }
+    .cv-card { width: 100%; flex-shrink: 1; }
+    .cv-card-right { width: 100%; }
+    .post-detail-wrap { flex: 0 0 500px; }
+  }
+
+  @media (max-width: 1200px) {
+    body { padding: 32px 60px; }
+    .nav-brand { width: auto; }
+    .blog-grid { grid-template-columns: repeat(3, 1fr); }
+  }
+
+  @media (max-width: 900px) {
+    body { padding: 24px 32px; }
+    .blog-grid { grid-template-columns: repeat(2, 1fr); }
+    .blog-layout { flex-direction: column; }
+    .post-detail-wrap { flex: none; width: 100%; }
+    .cert-grid { grid-template-columns: 1fr; }
+    .project-grid { grid-template-columns: 1fr; }
+  }
+
+  @media (max-width: 768px) {
+    body { padding: 20px; }
+    .navbar { padding: 10px 16px; }
+    .cv-card { grid-template-columns: 1fr; }
+    .sidebar { border-right: none; border-bottom: 1px solid var(--stone-200); }
+    .profile-photo { width: 140px; height: 140px; }
+    .main-header-name { font-size: 28px; }
+  }
