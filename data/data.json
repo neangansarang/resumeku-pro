@@ -1,0 +1,251 @@
+{
+  "profile": {
+    "name": "Asep Septiadi",
+    "title": "Software Engineer - 6+ Tahun Pengalaman - S1 Teknik Informatika",
+    "bio": "Saya adalah seorang Full Stack Developer berpengalaman dengan lebih dari 6 tahun membangun produk digital dari hulu ke hilir. Spesialisasi dalam pengembangan aplikasi web berbasis React dan Laravel, serta memiliki ketertarikan kuat pada arsitektur sistem yang skalabel dan pengalaman pengguna yang intuitif. Saya terbiasa bekerja dalam tim lintas fungsi dan mampu memimpin proyek dari tahap perencanaan hingga deployment produksi.",
+    "photo_path": ""
+  },
+  "contact": {
+    "phone": "+62813 2409 1141",
+    "email": "septiadi.imail@gmail.com",
+    "location": "Jakasetia, Bekasi Selatan"
+  },
+  "social_media": [
+    {
+      "platform": "LinkedIn",
+      "url": "https://linkedin.com/in/aspsptyd",
+      "icon": "fab fa-linkedin-in"
+    },
+    {
+      "platform": "GitHub",
+      "url": "https://github.com/aspsptyd",
+      "icon": "fab fa-github"
+    },
+    {
+      "platform": "Instagram",
+      "url": "https://instagram.com/aspsptyd",
+      "icon": "fab fa-instagram"
+    },
+    {
+      "platform": "Twitter",
+      "url": "https://twitter.com/aspsptyd",
+      "icon": "fab fa-twitter"
+    },
+    {
+      "platform": "dev.to",
+      "url": "https://dev.to/aspsptyd",
+      "icon": "fab fa-dev"
+    }
+  ],
+  "skills": [
+    {
+      "name": "JavaScript",
+      "percentage": 90
+    },
+    {
+      "name": "PHP / Laravel",
+      "percentage": 85
+    },
+    {
+      "name": "React.js",
+      "percentage": 88
+    },
+    {
+      "name": "Node.js",
+      "percentage": 80
+    },
+    {
+      "name": "Vue.js",
+      "percentage": 75
+    },
+    {
+      "name": "Python",
+      "percentage": 70
+    },
+    {
+      "name": "MySQL / PostgreSQL",
+      "percentage": 82
+    },
+    {
+      "name": "Docker / Linux",
+      "percentage": 72
+    },
+    {
+      "name": "HTML / CSS / Tailwind",
+      "percentage": 95
+    },
+    {
+      "name": "Git / CI-CD",
+      "percentage": 85
+    }
+  ],
+  "abilities": [
+    "Leadership",
+    "Project Management",
+    "Problem Solving",
+    "Komunikasi",
+    "Teamwork",
+    "Adaptif",
+    "Initiatif",
+    "Analisis Data",
+    "Agile / Scrum"
+  ],
+  "experiences": [
+    {
+      "role": "Junior Web Developer",
+      "company": "CV Kreasi Digital Nusantara",
+      "period": "Jul 2017 - Des 2017",
+      "period_start": "Jul 2017",
+      "period_end": "Des 2017",
+      "description": "",
+      "bullets": [
+        "Magang dan bekerja penuh mengembangkan sistem informasi manajemen sekolah berbasis PHP native."
+      ]
+    },
+    {
+      "role": "Web Developer (Freelance)",
+      "company": "Berbagai Klien",
+      "period": "Jan 2018 - Mei 2019",
+      "period_start": "Jan 2018",
+      "period_end": "Mei 2019",
+      "description": "",
+      "bullets": [
+        "Membangun 12+ website company profile dan e-commerce untuk UMKM menggunakan WordPress dan PHP."
+      ]
+    },
+    {
+      "role": "Backend Developer",
+      "company": "PT Bukalapak",
+      "period": "Jun 2019 - Feb 2020",
+      "period_start": "Jun 2019",
+      "period_end": "Feb 2020",
+      "description": "",
+      "bullets": [
+        "Membangun RESTful API menggunakan Laravel untuk modul manajemen produk dan stok.",
+        "Mengimplementasikan caching dengan Redis, mengurangi waktu respons API sebesar 40%."
+      ]
+    },
+    {
+      "role": "Frontend Developer",
+      "company": "PT Gojek Indonesia",
+      "period": "Mar 2020 - Des 2021",
+      "period_start": "Mar 2020",
+      "period_end": "Des 2021",
+      "description": "",
+      "bullets": [
+        "Mengembangkan dashboard analytics internal menggunakan React.js dan D3.js untuk tim operasional.",
+        "Mengoptimalkan performa halaman web (Core Web Vitals) sehingga LCP turun dari 4.2s ke 1.8s."
+      ]
+    },
+    {
+      "role": "Senior Full Stack Developer",
+      "company": "PT Tokopedia Teknologi",
+      "period": "Jan 2022 - Sekarang",
+      "period_start": "Jan 2022",
+      "period_end": "Sekarang",
+      "description": "",
+      "bullets": [
+        "Memimpin tim 5 engineer dalam membangun fitur checkout baru yang meningkatkan konversi sebesar 23%.",
+        "Merancang arsitektur microservice menggunakan Node.js dan Docker untuk layanan payment gateway.",
+        "Mengintegrasikan sistem notifikasi real-time dengan WebSocket dan Redis Pub/Sub."
+      ]
+    }
+  ],
+  "education": [
+    {
+      "degree": "Rekayasa Perangkat Lunak (RPL)",
+      "institution": "SMK Negeri 4",
+      "gpa": "Nilai rata-rata: 87.5 · Lulusan Terbaik",
+      "period": "2010 – 2013",
+      "description": "Bandung"
+    },
+    {
+      "degree": "S1 Teknik Informatika",
+      "institution": "Universitas Telkom",
+      "gpa": "IPK Akhir: 3.72 / 4.00 · Cumlaude",
+      "period": "2013 – 2017",
+      "description": "Bandung"
+    }
+  ],
+  "certifications": [
+    {
+      "name": "Professional Scrum Master I",
+      "issuer": "Scrum.org",
+      "link": ""
+    },
+    {
+      "name": "CompTIA Security+",
+      "issuer": "CompTIA",
+      "link": ""
+    },
+    {
+      "name": "Meta React Developer",
+      "issuer": "Meta / Coursera",
+      "link": ""
+    },
+    {
+      "name": "Google Cloud Professional",
+      "issuer": "Google Cloud",
+      "link": ""
+    },
+    {
+      "name": "AWS Certified Solutions Architect",
+      "issuer": "Amazon Web Services",
+      "link": ""
+    }
+  ],
+  "projects": [
+    {
+      "name": "LMS – Learning Platform",
+      "description": "Platform e-learning dengan kursus video, kuis interaktif, sertifikat, dan sistem tracking progres siswa.",
+      "tech_stack": "PHP, MySQL, FFmpeg",
+      "link": ""
+    },
+    {
+      "name": "CI/CD Pipeline Tool",
+      "description": "Alat otomasi deployment berbasis Docker dan GitHub Actions untuk mempercepat proses rilis dari 4 jam menjadi 15 menit.",
+      "tech_stack": "Docker, GitHub Actions, Bash",
+      "link": ""
+    },
+    {
+      "name": "Telemedicine App",
+      "description": "Aplikasi konsultasi dokter online dengan video call, resep digital, dan integrasi apotek untuk 50K+ pengguna aktif.",
+      "tech_stack": "React Native, WebRTC, Firebase",
+      "link": ""
+    },
+    {
+      "name": "HR Management System",
+      "description": "Sistem manajemen SDM meliputi absensi, penggajian, penilaian kinerja, dan manajemen cuti berbasis web.",
+      "tech_stack": "Vue.js, Node.js, PostgreSQL",
+      "link": ""
+    },
+    {
+      "name": "E-Commerce Platform",
+      "description": "Platform belanja online lengkap dengan fitur multi-vendor, payment gateway, dan dashboard analitik real-time untuk seller.",
+      "tech_stack": "Laravel, React, MySQL",
+      "link": ""
+    }
+  ],
+  "awards": [
+    {
+      "name": "Google Project Management Certificate",
+      "issuer": "Google / Coursera",
+      "year": "2023"
+    },
+    {
+      "name": "Juara 1 Hackathon Nasional 2023",
+      "issuer": "Kemenkominfo",
+      "year": "2023"
+    },
+    {
+      "name": "AWS Certified Cloud Practitioner",
+      "issuer": "Amazon Web Services",
+      "year": "2023"
+    },
+    {
+      "name": "Best Developer Award 2024",
+      "issuer": "PT Tech Innovasi",
+      "year": "2024"
+    }
+  ]
+}

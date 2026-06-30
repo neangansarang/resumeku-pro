@@ -1,0 +1,9 @@
+{
+  "name": "resume-asep",
+  "version": "1.0.0",
+  "private": true,
+  "scripts": {
+    "admin": "node admin.js",
+    "seed": "node admin/seed.js"
+  }
+}
