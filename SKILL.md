@@ -402,6 +402,7 @@ Ketika ingin mengupdate CV, periksa urutan ini:
 - [ ] **Proyek:** `.project-item` di `.project-grid`
 - [ ] **Right card:** `.achieve-item`, `.interest-tag`, skill bar bahasa di `.cv-card-right`
 - [ ] **Blog:** tambah/edit objek di array `posts` di `js/script.js`
+- [ ] **CI/CD:** pastikan workflow deploy lulus setelah push ke `main`
 - [ ] **Thumbnail blog:** buat file SVG di `src/images/blog-xxx.svg`
 - [ ] **Navbar:** update `.nav-link` jika ada halaman baru
 
@@ -425,12 +426,83 @@ resume-asep/
 │       ├── blog-design.svg     ← Thumbnail blog Design System
 │       ├── blog-career.svg     ← Thumbnail blog Career
 │       └── blog-ai.svg         ← Thumbnail blog AI & Tech
-└── SKILL.md            ← Dokumentasi ini
+├── .github/
+│   └── workflows/
+│       └── deploy.yml  ← GitHub Actions workflow
+├── SKILL.md            ← Dokumentasi teknis & maintenance
+├── README.md           ← Informasi umum proyek
+└── ARCHITECTURE.md     ← Dokumentasi arsitektur
 ```
 
 ---
 
-## 12. Catatan Tambahan
+## 12. CI/CD — GitHub Actions
+
+Proyek ini menggunakan **GitHub Actions** untuk deploy otomatis ke **GitHub Pages**.
+
+### Workflow file
+
+File: `.github/workflows/deploy.yml`
+
+```yaml
+name: Deploy to GitHub Pages
+
+on:
+  push:
+    branches: [main]
+  workflow_dispatch:
+
+permissions:
+  contents: read
+  pages: write
+  id-token: write
+
+concurrency:
+  group: pages
+  cancel-in-progress: false
+
+jobs:
+  deploy:
+    environment:
+      name: github-pages
+      url: ${{ steps.deployment.outputs.page_url }}
+    runs-on: ubuntu-latest
+    steps:
+      - uses: actions/checkout@v4
+      - uses: actions/configure-pages@v5
+      - uses: actions/upload-pages-artifact@v3
+        with:
+          path: '.'
+      - id: deployment
+        uses: actions/deploy-pages@v4
+```
+
+### Penjelasan
+
+| Trigger | Keterangan |
+|---------|------------|
+| `push` ke `main` | Otomatis build & deploy |
+| `workflow_dispatch` | Bisa di-trigger manual dari tab Actions GitHub |
+
+### Alur
+
+1. Checkout kode dari repository
+2. Konfigurasi Pages environment
+3. Upload seluruh direktori proyek sebagai artifact (tidak ada build step karena static site)
+4. Deploy artifact ke GitHub Pages
+
+### Prasyarat (sekali atur di repo)
+
+1. Buka Settings → **Pages** → Source: `GitHub Actions`
+2. Pastikan environment `github-pages` sudah diizinkan (workflow membuatnya otomatis)
+
+### URL
+
+Live site: `https://neangansarang.github.io/resumeku-pro/`
+
+---
+
+## 13. Catatan Tambahan
 
 - Proyek ini bergantung pada Google Fonts dan Font Awesome (butuh koneksi internet untuk tampil sempurna).
 - CSS dan JavaScript sudah dipisahkan ke folder masing-masing (`css/` dan `js/`) untuk kemudahan maintenance.
