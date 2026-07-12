@@ -429,9 +429,11 @@ resume-asep/
 ├── .github/
 │   └── workflows/
 │       └── deploy.yml  ← GitHub Actions workflow
-├── SKILL.md            ← Dokumentasi teknis & maintenance
 ├── README.md           ← Informasi umum proyek
-└── ARCHITECTURE.md     ← Dokumentasi arsitektur
+└── know-me/
+    ├── SKILL.md            ← Dokumentasi teknis & maintenance
+    ├── ARCHITECTURE.md     ← Dokumentasi arsitektur
+    └── DOCS.md             ← Dokumentasi
 ```
 
 ---

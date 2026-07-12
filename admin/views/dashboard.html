@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dashboard - Admin CV</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-stone-100 min-h-screen">
+  <div class="flex">
+    <aside class="w-56 bg-stone-800 text-stone-200 min-h-screen p-4 flex flex-col">
+      <h2 class="text-lg font-bold mb-6 text-white">CV Admin</h2>
+      <nav class="flex-1 space-y-1">
+        <a href="/admin/dashboard" class="block px-3 py-2 rounded bg-stone-700 text-white font-medium">Dashboard</a>
+        <a href="/admin/profile" class="block px-3 py-2 rounded hover:bg-stone-700">Profile</a>
+        <a href="/admin/contact" class="block px-3 py-2 rounded hover:bg-stone-700">Contact</a>
+        <a href="/admin/social-media" class="block px-3 py-2 rounded hover:bg-stone-700">Social Media</a>
+        <a href="/admin/skills" class="block px-3 py-2 rounded hover:bg-stone-700">Technical Skills</a>
+        <a href="/admin/abilities" class="block px-3 py-2 rounded hover:bg-stone-700">Soft Skills</a>
+        <a href="/admin/experiences" class="block px-3 py-2 rounded hover:bg-stone-700">Experience</a>
+        <a href="/admin/education" class="block px-3 py-2 rounded hover:bg-stone-700">Education</a>
+        <a href="/admin/certifications" class="block px-3 py-2 rounded hover:bg-stone-700">Certifications</a>
+        <a href="/admin/projects" class="block px-3 py-2 rounded hover:bg-stone-700">Projects</a>
+        <a href="/admin/awards" class="block px-3 py-2 rounded hover:bg-stone-700">Awards</a>
+      </nav>
+      <div class="pt-4 border-t border-stone-700">
+        <a href="/auth/logout" class="block px-3 py-2 text-stone-400 hover:text-white">Logout</a>
+      </div>
+    </aside>
+    <main class="flex-1 p-8">
+      <h1 class="text-2xl font-bold text-stone-800 mb-6">Dashboard</h1>
+      <div class="grid grid-cols-2 md:grid-cols-3 lg:grid-cols-4 gap-4" id="statsGrid"></div>
+      <div class="mt-8 bg-white rounded-lg shadow p-6">
+        <h2 class="text-lg font-semibold text-stone-700 mb-4">Sinkronisasi Data</h2>
+        <p class="text-stone-500 text-sm mb-3">Generate data.json dari database SQLite untuk frontend publik.</p>
+        <button id="syncBtn" class="bg-stone-700 text-white px-4 py-2 rounded hover:bg-stone-800 transition">Sync ke JSON</button>
+        <span id="syncMsg" class="ml-3 text-sm text-green-600 hidden">Sync berhasil!</span>
+      </div>
+    </main>
+  </div>
+  <script>
+    async function loadStats() {
+      const sections = [
+        { label: 'Profile', path: 'profile' },
+        { label: 'Contact', path: 'contact' },
+        { label: 'Social Media', path: 'social-media' },
+        { label: 'Technical Skills', path: 'skills' },
+        { label: 'Soft Skills', path: 'abilities' },
+        { label: 'Experience', path: 'experiences' },
+        { label: 'Education', path: 'education' },
+        { label: 'Certifications', path: 'certifications' },
+        { label: 'Projects', path: 'projects' },
+        { label: 'Awards', path: 'awards' }
+      ];
+      const grid = document.getElementById('statsGrid');
+      for (const sec of sections) {
+        try {
+          const res = await fetch(`/api/${sec.path}`);
+          const data = await res.json();
+          const count = Array.isArray(data) ? data.length : (data.id || data.name ? 1 : 0);
+          grid.innerHTML += `
+            <div class="bg-white rounded-lg shadow p-4">
+              <p class="text-stone-500 text-sm">${sec.label}</p>
+              <p class="text-2xl font-bold text-stone-800 mt-1">${count}</p>
+              <a href="/admin/${sec.path}" class="text-stone-600 text-sm hover:underline mt-2 inline-block">Kelola →</a>
+            </div>
+          `;
+        } catch(e) {
+          // ignore
+        }
+      }
+    }
+    loadStats();
+
+    document.getElementById('syncBtn').addEventListener('click', async () => {
+      const msg = document.getElementById('syncMsg');
+      msg.classList.add('hidden');
+      await fetch('/api/sync', { method: 'POST' });
+      msg.classList.remove('hidden');
+      setTimeout(() => msg.classList.add('hidden'), 3000);
+    });
+  </script>
+</body>
+</html>

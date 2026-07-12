@@ -1,0 +1,124 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Certifications - Admin CV</title>
+  <script src="https://cdn.tailwindcss.com"></script>
+</head>
+<body class="bg-stone-100 min-h-screen">
+  <div class="flex">
+    <aside class="w-56 bg-stone-800 text-stone-200 min-h-screen p-4 flex flex-col">
+      <h2 class="text-lg font-bold mb-6 text-white">CV Admin</h2>
+      <nav class="flex-1 space-y-1">
+        <a href="/admin/dashboard" class="block px-3 py-2 rounded hover:bg-stone-700">Dashboard</a>
+        <a href="/admin/profile" class="block px-3 py-2 rounded hover:bg-stone-700">Profile</a>
+        <a href="/admin/contact" class="block px-3 py-2 rounded hover:bg-stone-700">Contact</a>
+        <a href="/admin/social-media" class="block px-3 py-2 rounded hover:bg-stone-700">Social Media</a>
+        <a href="/admin/skills" class="block px-3 py-2 rounded hover:bg-stone-700">Technical Skills</a>
+        <a href="/admin/abilities" class="block px-3 py-2 rounded hover:bg-stone-700">Soft Skills</a>
+        <a href="/admin/experiences" class="block px-3 py-2 rounded hover:bg-stone-700">Experience</a>
+        <a href="/admin/education" class="block px-3 py-2 rounded hover:bg-stone-700">Education</a>
+        <a href="/admin/certifications" class="block px-3 py-2 rounded bg-stone-700 text-white font-medium">Certifications</a>
+        <a href="/admin/projects" class="block px-3 py-2 rounded hover:bg-stone-700">Projects</a>
+        <a href="/admin/awards" class="block px-3 py-2 rounded hover:bg-stone-700">Awards</a>
+      </nav>
+      <div class="pt-4 border-t border-stone-700">
+        <a href="/auth/logout" class="block px-3 py-2 text-stone-400 hover:text-white">Logout</a>
+      </div>
+    </aside>
+    <main class="flex-1 p-8">
+      <div class="flex justify-between items-center mb-6">
+        <h1 class="text-2xl font-bold text-stone-800">Certifications</h1>
+        <button onclick="openForm()" class="bg-stone-700 text-white px-4 py-2 rounded hover:bg-stone-800 transition">+ Tambah</button>
+      </div>
+      <div class="bg-white rounded-lg shadow overflow-hidden">
+        <table class="w-full text-left">
+          <thead class="bg-stone-100 text-stone-600 text-sm">
+            <tr><th class="p-3">Nama</th><th class="p-3">Issuer</th><th class="p-3">Link</th><th class="p-3">Aksi</th></tr>
+          </thead>
+          <tbody id="tableBody" class="text-sm text-stone-700"></tbody>
+        </table>
+      </div>
+    </main>
+  </div>
+  <div id="modal" class="hidden fixed inset-0 bg-black/50 flex items-center justify-center">
+    <div class="bg-white rounded-lg p-6 w-full max-w-md">
+      <h2 class="text-lg font-semibold mb-4" id="modalTitle">Tambah Certification</h2>
+      <form id="itemForm" class="space-y-3">
+        <input type="hidden" name="id">
+        <div>
+          <label class="block text-sm font-medium text-stone-700">Nama Sertifikasi</label>
+          <input type="text" name="name" required class="w-full px-3 py-2 border border-stone-300 rounded-md focus:outline-none focus:ring-2 focus:ring-stone-500">
+        </div>
+        <div>
+          <label class="block text-sm font-medium text-stone-700">Issuer / Penerbit</label>
+          <input type="text" name="issuer" class="w-full px-3 py-2 border border-stone-300 rounded-md focus:outline-none focus:ring-2 focus:ring-stone-500">
+        </div>
+        <div>
+          <label class="block text-sm font-medium text-stone-700">Link (opsional)</label>
+          <input type="url" name="link" class="w-full px-3 py-2 border border-stone-300 rounded-md focus:outline-none focus:ring-2 focus:ring-stone-500">
+        </div>
+        <div class="flex gap-2 justify-end pt-2">
+          <button type="button" onclick="closeForm()" class="px-4 py-2 border border-stone-300 rounded text-stone-600 hover:bg-stone-50">Batal</button>
+          <button type="submit" class="px-4 py-2 bg-stone-700 text-white rounded hover:bg-stone-800">Simpan</button>
+        </div>
+      </form>
+    </div>
+  </div>
+  <script>
+    let items = [];
+    async function load() {
+      const res = await fetch('/api/certifications');
+      items = await res.json();
+      render();
+    }
+    function render() {
+      document.getElementById('tableBody').innerHTML = items.map(item => `
+        <tr class="border-t border-stone-200">
+          <td class="p-3 font-medium">${item.name}</td>
+          <td class="p-3">${item.issuer || '-'}</td>
+          <td class="p-3">${item.link ? `<a href="${item.link}" target="_blank" class="text-blue-600">Link</a>` : '-'}</td>
+          <td class="p-3 space-x-2">
+            <button onclick='editItem(${JSON.stringify(item).replace(/'/g,"&#39;")})' class="text-blue-600 hover:underline">Edit</button>
+            <button onclick="deleteItem(${item.id})" class="text-red-600 hover:underline">Hapus</button>
+          </td>
+        </tr>
+      `).join('');
+    }
+    function openForm(data) {
+      document.getElementById('modal').classList.remove('hidden');
+      const form = document.getElementById('itemForm');
+      form.reset();
+      document.getElementById('modalTitle').textContent = data ? 'Edit Certification' : 'Tambah Certification';
+      if (data) {
+        form.querySelector('[name="id"]').value = data.id;
+        form.querySelector('[name="name"]').value = data.name;
+        form.querySelector('[name="issuer"]').value = data.issuer || '';
+        form.querySelector('[name="link"]').value = data.link || '';
+      }
+    }
+    function closeForm() { document.getElementById('modal').classList.add('hidden'); }
+    function editItem(data) { openForm(data); }
+    async function deleteItem(id) {
+      if (!confirm('Hapus sertifikasi ini?')) return;
+      await fetch(`/api/certifications/${id}`, { method: 'DELETE' });
+      await load();
+    }
+    document.getElementById('itemForm').addEventListener('submit', async (e) => {
+      e.preventDefault();
+      const form = new FormData(e.target);
+      const payload = { name: form.get('name'), issuer: form.get('issuer'), link: form.get('link') };
+      const id = form.get('id');
+      if (id) {
+        await fetch(`/api/certifications/${id}`, { method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
+      } else {
+        await fetch('/api/certifications', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
+      }
+      closeForm();
+      await load();
+    });
+    load();
+  </script>
+</body>
+</html>

@@ -41,8 +41,10 @@ resume-asep/
 ├── js/script.js            JavaScript logic & blog data
 ├── src/images/             Profile photo & blog thumbnails
 ├── .github/workflows/      CI/CD pipeline
-├── SKILL.md                Maintenance guide
-└── ARCHITECTURE.md         Architecture documentation
+└── know-me/
+    ├── SKILL.md                Maintenance guide
+    ├── ARCHITECTURE.md         Architecture documentation
+    └── DOCS.md                 Documentation
 ```
 
 ## Deployment
