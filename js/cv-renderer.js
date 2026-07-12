@@ -111,7 +111,7 @@ function renderMain(data) {
 
   // Education
   if (edu.length) {
-    html += `<div><div class="main-section-title">// Pendidikan</div>`;
+    html += `<div><div class="main-section-title" style="margin-bottom: 30px;">// Pendidikan</div>`;
     edu.forEach(e => {
       html += `<div class="edu-item">
         <span class="edu-year">${e.period || ''}</span>

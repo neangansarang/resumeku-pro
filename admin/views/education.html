@@ -126,9 +126,12 @@
         description: form.get('description')
       };
       const id = form.get('id');
+      console.log('[education] id value:', JSON.stringify(id), 'type:', typeof id);
       if (id) {
+        console.log('[education] → PUT (update) id:', id);
         await fetch(`/api/education/${id}`, { method: 'PUT', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
       } else {
+        console.log('[education] → POST (create baru)');
         await fetch('/api/education', { method: 'POST', headers: { 'Content-Type': 'application/json' }, body: JSON.stringify(payload) });
       }
       closeForm();

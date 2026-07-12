@@ -153,25 +153,25 @@
   ],
   "education": [
     {
-      "degree": "Rekayasa Perangkat Lunak (RPL)",
-      "institution": "SMK Negeri 4",
-      "gpa": "Nilai rata-rata: 87.5 · Lulusan Terbaik",
-      "period": "2010 – 2013",
-      "description": "Bandung"
+      "degree": "Teknik Otomotif",
+      "institution": "SMK Islam Al-Muhajirin Boarding School Cikarang",
+      "gpa": "Nilai rata-rata 89",
+      "period": "2010-2013",
+      "description": ""
     },
     {
-      "degree": "S1 Teknik Informatika",
-      "institution": "Universitas Telkom",
-      "gpa": "IPK Akhir: 3.72 / 4.00 · Cumlaude",
-      "period": "2013 – 2017",
-      "description": "Bandung"
+      "degree": "S1 - Teknik Informatika",
+      "institution": "STT Pelita Bangsa Cikarang",
+      "gpa": "IPK 3.00",
+      "period": "2013 - 2017",
+      "description": ""
     }
   ],
   "certifications": [
     {
       "name": "Professional Scrum Master I",
       "issuer": "Scrum.org",
-      "link": ""
+      "link": "https://github.com/neangansarang/resumeku-pro"
     },
     {
       "name": "CompTIA Security+",

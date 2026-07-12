@@ -192,16 +192,19 @@ router.get('/education', (req, res) => {
 
 router.post('/education', (req, res) => {
   const { degree, institution, gpa, period, description } = req.body;
+  console.log('[POST /education] creating new:', { degree, institution });
   const db = getDb();
   const maxOrder = db.prepare('SELECT COALESCE(MAX(sort_order), 0) + 1 AS next FROM education').get().next;
-  db.prepare('INSERT INTO education (degree, institution, gpa, period, description, sort_order) VALUES (?, ?, ?, ?, ?, ?)')
+  const result = db.prepare('INSERT INTO education (degree, institution, gpa, period, description, sort_order) VALUES (?, ?, ?, ?, ?, ?)')
     .run(degree, institution, gpa || '', period || '', description || '', maxOrder);
+  console.log('[POST /education] inserted id:', result.lastInsertRowid);
   syncJson();
   res.json({ success: true });
 });
 
 router.put('/education/:id', (req, res) => {
   const { degree, institution, gpa, period, description } = req.body;
+  console.log('[PUT /education/:id] updating id:', req.params.id, { degree, institution });
   getDb().prepare('UPDATE education SET degree = ?, institution = ?, gpa = ?, period = ?, description = ? WHERE id = ?')
     .run(degree, institution, gpa || '', period || '', description || '', req.params.id);
   syncJson();

@@ -43,8 +43,10 @@ resume-asep/
 │   └── workflows/
 │       └── deploy.yml         GitHub Actions deploy workflow
 ├── README.md                  Project overview
-├── SKILL.md                   Maintenance & contribution guide
-└── ARCHITECTURE.md            This document
+└── know-me/
+    ├── SKILL.md                   Maintenance & contribution guide
+    ├── ARCHITECTURE.md            This document
+    └── DOCS.md                    Documentation
 ```
 
 ---
