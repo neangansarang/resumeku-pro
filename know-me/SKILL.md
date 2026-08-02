@@ -438,7 +438,69 @@ resume-asep/
 
 ---
 
-## 12. CI/CD — GitHub Actions
+## 12. Menjalankan Admin Dashboard
+
+Proyek ini memiliki **Admin Dashboard** berbasis Express.js untuk mengelola data CV secara dinamis (bukan hardcoded).
+
+### Prasyarat
+
+- Node.js v18+ dan npm
+
+### Install Dependencies
+
+```bash
+cd admin
+npm install
+```
+
+### Jalankan Server
+
+Cara paling mudah (seed user + start server dalam satu perintah):
+
+```bash
+node admin.js
+```
+
+atau gunakan npm script dari root:
+
+```bash
+npm run admin
+```
+
+### Akses Dashboard
+
+| Halaman | URL |
+|---------|-----|
+| Admin Dashboard Login | `http://localhost:3001/admin/login` |
+| Public CV Site | `http://localhost:3001/` |
+
+### Default Login
+
+| Field | Value |
+|-------|-------|
+| Username | `admin` |
+| Password | `admin123` |
+
+### Ubah Port
+
+```bash
+PORT=8080 node admin.js
+```
+
+### Reset Database
+
+```bash
+rm -f data/resume.db data/resume.db-wal data/resume.db-shm
+node admin/seed.js
+node admin/seed-data.js
+node admin.js
+```
+
+> Dokumentasi lengkap ada di `know-me/DOCS.md` bagian "Cara Menjalankan".
+
+---
+
+## 13. CI/CD — GitHub Actions
 
 Proyek ini menggunakan **GitHub Actions** untuk deploy otomatis ke **GitHub Pages**.
 

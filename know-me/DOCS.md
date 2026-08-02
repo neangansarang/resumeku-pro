@@ -310,6 +310,12 @@ Script `admin.js` akan melakukan seed user + start server secara berurutan.
 node admin.js
 ```
 
+atau gunakan npm script:
+
+```bash
+npm run admin
+```
+
 ### 4. Akses
 
 | Halaman | URL |

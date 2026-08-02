@@ -258,6 +258,57 @@ The project is pure static files (HTML/CSS/JS). No bundler, transpiler, or prepr
 
 ---
 
+## Admin Dashboard
+
+Proyek ini memiliki **Admin Dashboard** berbasis Express.js untuk mengelola data CV secara dinamis.
+
+### Tech Stack Backend
+
+| Layer | Technology |
+|-------|-----------|
+| Runtime | Node.js |
+| Framework | Express.js |
+| Database | SQLite via `better-sqlite3` |
+| Session | express-session (cookie-based) |
+| Password | bcryptjs |
+| File Upload | multer |
+| Admin UI | Tailwind CSS via CDN |
+
+### Cara Menjalankan
+
+**Install dependencies:**
+```bash
+cd admin
+npm install
+```
+
+**Jalankan server (seed + start):**
+```bash
+node admin.js
+```
+atau gunakan npm script:
+```bash
+npm run admin
+```
+
+**Akses:**
+
+| Halaman | URL |
+|---------|-----|
+| Admin Dashboard Login | `http://localhost:3001/admin/login` |
+| Public CV Site | `http://localhost:3001/` |
+
+**Default Login:**
+- Username: `admin`
+- Password: `admin123`
+
+**Ubah Port:**
+```bash
+PORT=8080 node admin.js
+```
+
+---
+
 ## Maintenance Principles
 
 1. **No framework lock-in** — Easy to migrate or extend since there are zero dependencies beyond CDN fonts/icons
