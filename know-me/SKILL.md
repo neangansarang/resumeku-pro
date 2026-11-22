@@ -12,6 +12,7 @@ Proyek ini adalah **single-page CV + Blog** berbasis HTML murni dengan CSS dan J
 |------|------------|-----------|
 | Curriculum Vitae | `#page-cv` | CV dua-kolom (sidebar + main) + right card achievement |
 | Blog & Tulisan | `#page-blog` | Grid kartu blog dengan detail inline |
+| Achieve & Contribute | `#page-achieve` | Grid 10 kartu dummy (5 Achievement + 5 Contribution), thumbnail ikon Font Awesome, detail inline |
 
 **Navigasi:** Navbar sticky (`position: sticky; top: 20px; z-index: 100`) dengan logo "AS" di kiri, menu di kanan.
 
@@ -287,7 +288,7 @@ Tag HTML yang didukung di dalam `content`:
 | `renderBlog()` | Render semua kartu blog ke `#blog-grid` |
 | `openPost(i)` | Tampilkan detail artikel ke-`i`, toggle `.open` di `.post-detail-wrap`, hide card lain |
 | `closePost()` | Sembunyikan panel detail, scroll kembali ke grid |
-| `switchPage(p, e)` | Ganti halaman aktif (CV / Blog), update class `.active` di `.nav-link` |
+| `switchPage(p, e)` | Ganti halaman aktif (CV / Blog / Achieve), update class `.active` di `.nav-link`, tutup panel detail terbuka |
 
 > `renderBlog()` dipanggil otomatis saat halaman dimuat.
 > `openPost()` toggle class `.open` di `.post-detail-wrap` (bukan `.post-detail`).
@@ -329,6 +330,9 @@ Masing-masing SVG berisi gradien warna relevan dengan nama topik di tengah (font
 Untuk menambah halaman baru:
 1. Buat `<div id="page-namabaru" class="page">`
 2. Tambah button di `.nav-links` dengan `onclick="switchPage('namabaru', event)"`
+3. Halaman baru harus punya `id="page-namabaru"` + class `page`
+4. Daftarkan di objek `SECTIONS` di `js/script.js` (`{ items, gridId, rootId, pfx }`) lalu panggil `renderSection('namabaru')`
+5. Tambah selector `#page-namabaru.page.active` di `css/style.css` jika butuh layout khusus (flex seperti blog)
 
 ---
 

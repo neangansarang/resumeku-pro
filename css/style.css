@@ -114,7 +114,8 @@
     display: block;
     animation: fadeIn .35s ease;
   }
-  #page-blog.page.active {
+  #page-blog.page.active,
+  #page-achieve.page.active {
     display: flex;
     justify-content: flex-end;
     animation: fadeIn .35s ease;
@@ -559,6 +560,19 @@
     object-fit: cover;
     display: block;
   }
+  /* Thumbnail ikon (halaman Achieve & Contribute) */
+  .blog-thumb-icon {
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    background: var(--stone-800);
+    border-bottom: 1px solid var(--stone-700);
+  }
+  .blog-thumb-icon i {
+    font-size: 38px;
+    color: var(--sage-mid);
+  }
+  .blog-card:hover .blog-thumb-icon i { color: var(--stone-100); }
   .blog-card-body { padding: 14px; }
   .blog-category {
     font-size: 9.5px;
@@ -683,3 +697,12 @@
     .profile-photo { width: 140px; height: 140px; }
     .main-header-name { font-size: 28px; }
   }
+
+/* Filter badges (achieve & contribute) */
+.blog-filter { display: flex; flex-direction: column; gap: 6px; margin-bottom: 12px; align-items: flex-start; }
+.filter-badge { padding: 4px 10px; border: 1px solid #d8d8d8; border-radius: 6px; background: #f7f7f7; cursor: pointer; font-size: 11px; font-weight: 600; letter-spacing: .4px; color: #555; line-height: 1.2; width: 120px; text-align: center; }
+.filter-badge:hover { background: #ececec; }
+.filter-badge.active { background: #2563a8; color: #fff; border-color: #2563a8; }
+
+.achieve-filter-section { margin-bottom: 16px; }
+.achieve-grid-section { margin-top: 0; }

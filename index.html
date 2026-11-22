@@ -18,6 +18,7 @@
   <div class="nav-links">
     <button class="nav-link active" onclick="switchPage('cv', event)">CURRICULUM VITAE</button>
     <button class="nav-link" onclick="switchPage('blog', event)">BLOG & TULISAN</button>
+    <button class="nav-link" onclick="switchPage('achieve', event)">ACHIEVE & CONTRIBUTE</button>
   </div>
 </nav>
 
@@ -54,6 +55,31 @@
               <div class="post-detail-meta" id="post-detail-meta"></div>
             </div>
             <div class="post-detail-body" id="post-detail-body"></div>
+          </div>
+        </div>
+      </div>
+  </div>
+</div>
+
+<!-- ACHIEVE & CONTRIBUTE PAGE -->
+<div id="page-achieve" class="page">
+  <div class="blog-page">
+      <div class="blog-layout">
+        <section class="achieve-filter-section">
+        <div class="blog-filter-wrap" id="achieve-filter"></div>
+      </section>
+      <section class="achieve-grid-section">
+        <div class="blog-grid" id="achieve-grid"></div>
+      </section>
+        <div class="post-detail-wrap">
+          <div class="post-detail" id="achieve-detail">
+            <div class="post-detail-header">
+              <button class="post-detail-close" onclick="closePost('achieve')"><i class="fas fa-times"></i></button>
+              <div class="post-detail-category" id="achieve-detail-category"></div>
+              <div class="post-detail-title" id="achieve-detail-title"></div>
+              <div class="post-detail-meta" id="achieve-detail-meta"></div>
+            </div>
+            <div class="post-detail-body" id="achieve-detail-body"></div>
           </div>
         </div>
       </div>
