@@ -70,7 +70,15 @@ function initTables() {
       sort_order INTEGER NOT NULL DEFAULT 0
     );
 
-    CREATE TABLE IF NOT EXISTS experience_bullets (
+    CREATE TABLE IF NOT EXISTS experience_job_desk (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      experience_id INTEGER NOT NULL,
+      text TEXT NOT NULL,
+      sort_order INTEGER NOT NULL DEFAULT 0,
+      FOREIGN KEY (experience_id) REFERENCES experiences(id) ON DELETE CASCADE
+    );
+
+    CREATE TABLE IF NOT EXISTS experience_achievements (
       id INTEGER PRIMARY KEY AUTOINCREMENT,
       experience_id INTEGER NOT NULL,
       text TEXT NOT NULL,
@@ -113,6 +121,21 @@ function initTables() {
       sort_order INTEGER NOT NULL DEFAULT 0
     );
   `);
+
+  // Migrasi: tambahkan kolom whatsapp & telegram jika belum ada
+  const cols = db.prepare("PRAGMA table_info(contact)").all().map(c => c.name);
+  if (!cols.includes('whatsapp')) {
+    db.exec("ALTER TABLE contact ADD COLUMN whatsapp TEXT NOT NULL DEFAULT ''");
+  }
+  if (!cols.includes('telegram')) {
+    db.exec("ALTER TABLE contact ADD COLUMN telegram TEXT NOT NULL DEFAULT ''");
+  }
+
+  // Migrasi: hapus experience_bullets lama jika ada
+  const tables = db.prepare("SELECT name FROM sqlite_master WHERE type='table'").all().map(t => t.name);
+  if (tables.includes('experience_bullets')) {
+    db.exec("DROP TABLE IF EXISTS experience_bullets");
+  }
 }
 
 function closeDb() {

@@ -26,9 +26,11 @@ function renderSidebar(data) {
   html += `<div><div class="profile-photo-wrap"><img src="${photoSrc}" alt="${p.name || 'Profile'}" class="profile-photo"></div></div>`;
 
   // Contact
-  if (c.phone || c.email || c.location) {
+  if (c.phone || c.email || c.location || c.whatsapp || c.telegram) {
     html += `<div class="sidebar-section"><div class="sidebar-section-title">// Kontak</div>`;
     if (c.phone) html += `<div class="contact-item"><i class="fas fa-phone"></i> ${c.phone}</div>`;
+    if (c.whatsapp) html += `<div class="contact-item"><i class="fab fa-whatsapp"></i> ${c.whatsapp}</div>`;
+    if (c.telegram) html += `<div class="contact-item"><i class="fab fa-telegram"></i> ${c.telegram}</div>`;
     if (c.email) html += `<div class="contact-item"><i class="fas fa-envelope"></i> ${c.email}</div>`;
     if (c.location) html += `<div class="contact-item"><i class="fas fa-map-marker-alt"></i> ${c.location}</div>`;
     html += `</div>`;
@@ -98,12 +100,24 @@ function renderMain(data) {
           <div class="exp-role">${e.role}</div>
           <div class="exp-period">${e.period || (e.period_start ? e.period_start + (e.period_end ? ' – ' + e.period_end : '') : '')}</div>
         </div>
-        <div class="exp-company">${e.company}</div>
+        <div class="exp-company">${e.company}</div>`;
+      if (e.job_desk && e.job_desk.length) {
+        html += `<div class="exp-sub-title">Responsibilities</div>
         <ul class="exp-bullets">`;
-      (e.bullets || []).forEach(b => {
-        html += `<li>${b.text || b}</li>`;
-      });
-      html += `</ul></div>`;
+        e.job_desk.forEach(j => {
+          html += `<li>${j}</li>`;
+        });
+        html += `</ul>`;
+      }
+      if (e.achievements && e.achievements.length) {
+        html += `<div class="exp-sub-title">Key Contributions / Achievements</div>
+        <ul class="exp-bullets">`;
+        e.achievements.forEach(a => {
+          html += `<li>${a}</li>`;
+        });
+        html += `</ul>`;
+      }
+      html += `</div>`;
       if (i < exps.length - 1) html += `<hr class="exp-divider">`;
     });
     html += `</div>`;

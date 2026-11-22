@@ -45,6 +45,16 @@
           <input type="text" name="location"
             class="w-full px-3 py-2 border border-stone-300 rounded-md focus:outline-none focus:ring-2 focus:ring-stone-500">
         </div>
+        <div>
+          <label class="block text-sm font-medium text-stone-700 mb-1">WhatsApp</label>
+          <input type="text" name="whatsapp" placeholder="e.g. +62813 2409 1141"
+            class="w-full px-3 py-2 border border-stone-300 rounded-md focus:outline-none focus:ring-2 focus:ring-stone-500">
+        </div>
+        <div>
+          <label class="block text-sm font-medium text-stone-700 mb-1">Telegram</label>
+          <input type="text" name="telegram" placeholder="e.g. @username"
+            class="w-full px-3 py-2 border border-stone-300 rounded-md focus:outline-none focus:ring-2 focus:ring-stone-500">
+        </div>
         <button type="submit" class="bg-stone-700 text-white px-6 py-2 rounded hover:bg-stone-800 transition">Simpan</button>
       </form>
     </main>
@@ -57,6 +67,8 @@
         document.querySelector('[name="phone"]').value = data.phone || '';
         document.querySelector('[name="email"]').value = data.email || '';
         document.querySelector('[name="location"]').value = data.location || '';
+        document.querySelector('[name="whatsapp"]').value = data.whatsapp || '';
+        document.querySelector('[name="telegram"]').value = data.telegram || '';
       }
     }
     load();
@@ -67,7 +79,7 @@
       await fetch('/api/contact', {
         method: 'PUT',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ phone: form.get('phone'), email: form.get('email'), location: form.get('location') })
+        body: JSON.stringify({ phone: form.get('phone'), email: form.get('email'), location: form.get('location'), whatsapp: form.get('whatsapp'), telegram: form.get('telegram') })
       });
       alert('Contact berhasil disimpan!');
     });

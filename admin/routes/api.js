@@ -39,15 +39,15 @@ router.get('/contact', (req, res) => {
 });
 
 router.put('/contact', (req, res) => {
-  const { phone, email, location } = req.body;
+  const { phone, email, location, whatsapp, telegram } = req.body;
   const db = getDb();
   const existing = db.prepare('SELECT id FROM contact LIMIT 1').get();
   if (existing) {
-    db.prepare('UPDATE contact SET phone = ?, email = ?, location = ? WHERE id = 1')
-      .run(phone, email, location);
+    db.prepare('UPDATE contact SET phone = ?, email = ?, location = ?, whatsapp = ?, telegram = ? WHERE id = 1')
+      .run(phone, email, location, whatsapp || '', telegram || '');
   } else {
-    db.prepare('INSERT INTO contact (phone, email, location) VALUES (?, ?, ?)')
-      .run(phone, email, location);
+    db.prepare('INSERT INTO contact (phone, email, location, whatsapp, telegram) VALUES (?, ?, ?, ?, ?)')
+      .run(phone, email, location, whatsapp || '', telegram || '');
   }
   syncJson();
   res.json({ success: true });
@@ -139,41 +139,65 @@ router.delete('/abilities/:id', (req, res) => {
 // ─── Experiences ───
 router.get('/experiences', (req, res) => {
   const db = getDb();
-  const items = db.prepare('SELECT * FROM experiences ORDER BY sort_order').all();
-  const getBullets = db.prepare('SELECT * FROM experience_bullets WHERE experience_id = ? ORDER BY sort_order');
+  const items = db.prepare('SELECT * FROM experiences ORDER BY sort_order ASC').all();
+  const getJobDesk = db.prepare('SELECT * FROM experience_job_desk WHERE experience_id = ? ORDER BY sort_order');
+  const getAchievements = db.prepare('SELECT * FROM experience_achievements WHERE experience_id = ? ORDER BY sort_order');
   const result = items.map(item => ({
     ...item,
-    bullets: getBullets.all(item.id)
+    job_desk: getJobDesk.all(item.id),
+    achievements: getAchievements.all(item.id)
   }));
   res.json(result);
 });
 
 router.post('/experiences', (req, res) => {
-  const { role, company, period_start, period_end, description, bullets } = req.body;
+  const { role, company, period_start, period_end, description, job_desk, achievements } = req.body;
   const db = getDb();
-  const maxOrder = db.prepare('SELECT COALESCE(MAX(sort_order), 0) + 1 AS next FROM experiences').get().next;
+  const minOrder = db.prepare('SELECT COALESCE(MIN(sort_order), 0) - 1 AS next FROM experiences').get().next;
   const result = db.prepare('INSERT INTO experiences (role, company, period_start, period_end, description, sort_order) VALUES (?, ?, ?, ?, ?, ?)')
-    .run(role, company, period_start || '', period_end || '', description || '', maxOrder);
+    .run(role, company, period_start || '', period_end || '', description || '', minOrder);
   const expId = result.lastInsertRowid;
 
-  if (bullets && bullets.length) {
-    const insertBullet = db.prepare('INSERT INTO experience_bullets (experience_id, text, sort_order) VALUES (?, ?, ?)');
-    bullets.forEach((text, i) => insertBullet.run(expId, text, i));
+  if (job_desk && job_desk.length) {
+    const insertJobDesk = db.prepare('INSERT INTO experience_job_desk (experience_id, text, sort_order) VALUES (?, ?, ?)');
+    job_desk.forEach((text, i) => insertJobDesk.run(expId, text, i));
+  }
+  if (achievements && achievements.length) {
+    const insertAchievement = db.prepare('INSERT INTO experience_achievements (experience_id, text, sort_order) VALUES (?, ?, ?)');
+    achievements.forEach((text, i) => insertAchievement.run(expId, text, i));
   }
   syncJson();
   res.json({ success: true, id: expId });
 });
 
+router.put('/experiences/reorder', (req, res) => {
+  const { ids } = req.body;
+  const db = getDb();
+  const stmt = db.prepare('UPDATE experiences SET sort_order = ? WHERE id = ?');
+  const tx = db.transaction(() => {
+    ids.forEach((id, i) => stmt.run(i + 1, id));
+  });
+  tx();
+  syncJson();
+  res.json({ success: true });
+});
+
 router.put('/experiences/:id', (req, res) => {
-  const { role, company, period_start, period_end, description, bullets } = req.body;
+  const { role, company, period_start, period_end, description, job_desk, achievements } = req.body;
   const db = getDb();
   db.prepare('UPDATE experiences SET role = ?, company = ?, period_start = ?, period_end = ?, description = ? WHERE id = ?')
     .run(role, company, period_start || '', period_end || '', description || '', req.params.id);
 
-  db.prepare('DELETE FROM experience_bullets WHERE experience_id = ?').run(req.params.id);
-  if (bullets && bullets.length) {
-    const insertBullet = db.prepare('INSERT INTO experience_bullets (experience_id, text, sort_order) VALUES (?, ?, ?)');
-    bullets.forEach((text, i) => insertBullet.run(req.params.id, text, i));
+  db.prepare('DELETE FROM experience_job_desk WHERE experience_id = ?').run(req.params.id);
+  if (job_desk && job_desk.length) {
+    const insertJobDesk = db.prepare('INSERT INTO experience_job_desk (experience_id, text, sort_order) VALUES (?, ?, ?)');
+    job_desk.forEach((text, i) => insertJobDesk.run(req.params.id, text, i));
+  }
+
+  db.prepare('DELETE FROM experience_achievements WHERE experience_id = ?').run(req.params.id);
+  if (achievements && achievements.length) {
+    const insertAchievement = db.prepare('INSERT INTO experience_achievements (experience_id, text, sort_order) VALUES (?, ?, ?)');
+    achievements.forEach((text, i) => insertAchievement.run(req.params.id, text, i));
   }
   syncJson();
   res.json({ success: true });

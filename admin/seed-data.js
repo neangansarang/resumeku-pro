@@ -60,31 +60,37 @@ abilities.forEach(a => insAbility.run(a));
 
 // Experiences
 const insExp = db.prepare('INSERT INTO experiences (role, company, period_start, period_end, description, sort_order) VALUES (?, ?, ?, ?, ?, ?)');
-const insBullet = db.prepare('INSERT INTO experience_bullets (experience_id, text, sort_order) VALUES (?, ?, ?)');
+const insJobDesk = db.prepare('INSERT INTO experience_job_desk (experience_id, text, sort_order) VALUES (?, ?, ?)');
+const insAchievement = db.prepare('INSERT INTO experience_achievements (experience_id, text, sort_order) VALUES (?, ?, ?)');
 
 const exp1 = insExp.run('Senior Full Stack Developer', 'PT Tokopedia Teknologi', 'Jan 2022', 'Sekarang', '', 5);
-['Memimpin tim 5 engineer dalam membangun fitur checkout baru yang meningkatkan konversi sebesar 23%.',
-  'Merancang arsitektur microservice menggunakan Node.js dan Docker untuk layanan payment gateway.',
+['Memimpin tim 5 engineer dalam membangun fitur checkout baru.',
+  'Merancang arsitektur microservice menggunakan Node.js dan Docker.',
   'Mengintegrasikan sistem notifikasi real-time dengan WebSocket dan Redis Pub/Sub.'
-].forEach((t, i) => insBullet.run(exp1.lastInsertRowid, t, i + 1));
+].forEach((t, i) => insJobDesk.run(exp1.lastInsertRowid, t, i + 1));
+['Meningkatkan konversi checkout sebesar 23%.'].forEach((t, i) => insAchievement.run(exp1.lastInsertRowid, t, i + 1));
 
 const exp2 = insExp.run('Frontend Developer', 'PT Gojek Indonesia', 'Mar 2020', 'Des 2021', '', 4);
-['Mengembangkan dashboard analytics internal menggunakan React.js dan D3.js untuk tim operasional.',
-  'Mengoptimalkan performa halaman web (Core Web Vitals) sehingga LCP turun dari 4.2s ke 1.8s.'
-].forEach((t, i) => insBullet.run(exp2.lastInsertRowid, t, i + 1));
+['Mengembangkan dashboard analytics internal menggunakan React.js dan D3.js.',
+  'Mengoptimalkan performa halaman web (Core Web Vitals).'
+].forEach((t, i) => insJobDesk.run(exp2.lastInsertRowid, t, i + 1));
+['LCP turun dari 4.2s ke 1.8s.'].forEach((t, i) => insAchievement.run(exp2.lastInsertRowid, t, i + 1));
 
 const exp3 = insExp.run('Backend Developer', 'PT Bukalapak', 'Jun 2019', 'Feb 2020', '', 3);
 ['Membangun RESTful API menggunakan Laravel untuk modul manajemen produk dan stok.',
-  'Mengimplementasikan caching dengan Redis, mengurangi waktu respons API sebesar 40%.'
-].forEach((t, i) => insBullet.run(exp3.lastInsertRowid, t, i + 1));
+  'Mengimplementasikan caching dengan Redis.'
+].forEach((t, i) => insJobDesk.run(exp3.lastInsertRowid, t, i + 1));
+['Mengurangi waktu respons API sebesar 40%.'].forEach((t, i) => insAchievement.run(exp3.lastInsertRowid, t, i + 1));
 
 const exp4 = insExp.run('Web Developer (Freelance)', 'Berbagai Klien', 'Jan 2018', 'Mei 2019', '', 2);
-['Membangun 12+ website company profile dan e-commerce untuk UMKM menggunakan WordPress dan PHP.']
-  .forEach((t, i) => insBullet.run(exp4.lastInsertRowid, t, i + 1));
+['Membangun website company profile dan e-commerce untuk UMKM menggunakan WordPress dan PHP.']
+  .forEach((t, i) => insJobDesk.run(exp4.lastInsertRowid, t, i + 1));
+['Berhasil menyelesaikan 12+ proyek website.'].forEach((t, i) => insAchievement.run(exp4.lastInsertRowid, t, i + 1));
 
 const exp5 = insExp.run('Junior Web Developer', 'CV Kreasi Digital Nusantara', 'Jul 2017', 'Des 2017', '', 1);
-['Magang dan bekerja penuh mengembangkan sistem informasi manajemen sekolah berbasis PHP native.']
-  .forEach((t, i) => insBullet.run(exp5.lastInsertRowid, t, i + 1));
+['Mengembangkan sistem informasi manajemen sekolah berbasis PHP native.']
+  .forEach((t, i) => insJobDesk.run(exp5.lastInsertRowid, t, i + 1));
+['Magang dan bekerja penuh selama 6 bulan.'].forEach((t, i) => insAchievement.run(exp5.lastInsertRowid, t, i + 1));
 
 // Education
 const insEdu = db.prepare('INSERT INTO education (degree, institution, gpa, period, description, sort_order) VALUES (?, ?, ?, ?, ?, ?)');

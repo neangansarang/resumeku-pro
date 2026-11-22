@@ -25,8 +25,9 @@ function syncJson() {
     description: e.description
   }));
 
-  const expRows = db.prepare('SELECT * FROM experiences ORDER BY sort_order').all();
-  const getBullets = db.prepare('SELECT text FROM experience_bullets WHERE experience_id = ? ORDER BY sort_order');
+  const expRows = db.prepare('SELECT * FROM experiences ORDER BY sort_order ASC').all();
+  const getJobDesk = db.prepare('SELECT text FROM experience_job_desk WHERE experience_id = ? ORDER BY sort_order');
+  const getAchievements = db.prepare('SELECT text FROM experience_achievements WHERE experience_id = ? ORDER BY sort_order');
   const experiences = expRows.map(e => ({
     role: e.role,
     company: e.company,
@@ -34,7 +35,8 @@ function syncJson() {
     period_start: e.period_start,
     period_end: e.period_end,
     description: e.description,
-    bullets: getBullets.all(e.id).map(b => b.text)
+    job_desk: getJobDesk.all(e.id).map(j => j.text),
+    achievements: getAchievements.all(e.id).map(a => a.text)
   }));
 
   const data = {
@@ -47,7 +49,9 @@ function syncJson() {
     contact: {
       phone: contact.phone || '',
       email: contact.email || '',
-      location: contact.location || ''
+      location: contact.location || '',
+      whatsapp: contact.whatsapp || '',
+      telegram: contact.telegram || ''
     },
     social_media: socialMedia,
     skills: skills,
