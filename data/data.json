@@ -310,5 +310,31 @@
       "issuer": "PT Tech Innovasi",
       "year": "2024"
     }
+  ],
+  "personal_data": [
+    {
+      "label": "Tanggal Lahir",
+      "value": "1994-09-21",
+      "icon": "fas fa-cake-candles",
+      "type": "date"
+    },
+    {
+      "label": "Umur",
+      "value": "",
+      "icon": "fas fa-hourglass-half",
+      "type": "age"
+    },
+    {
+      "label": "Tempat Lahir",
+      "value": "Indramayu, Jawa Barat",
+      "icon": "fas fa-map-marker-alt",
+      "type": "text"
+    },
+    {
+      "label": "Domisili",
+      "value": "Bekasi",
+      "icon": "fas fa-house",
+      "type": "text"
+    }
   ]
 }

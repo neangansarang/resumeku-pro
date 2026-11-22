@@ -328,6 +328,35 @@ router.delete('/awards/:id', (req, res) => {
   res.json({ success: true });
 });
 
+// ─── Personal Data (Data Saya) ───
+router.get('/personal-data', (req, res) => {
+  res.json(getDb().prepare('SELECT * FROM personal_data ORDER BY sort_order').all());
+});
+
+router.post('/personal-data', (req, res) => {
+  const { label, value, icon, type } = req.body;
+  const db = getDb();
+  const maxOrder = db.prepare('SELECT COALESCE(MAX(sort_order), 0) + 1 AS next FROM personal_data').get().next;
+  db.prepare('INSERT INTO personal_data (label, value, icon, type, sort_order) VALUES (?, ?, ?, ?, ?)')
+    .run(label, value || '', icon || '', type || 'text', maxOrder);
+  syncJson();
+  res.json({ success: true });
+});
+
+router.put('/personal-data/:id', (req, res) => {
+  const { label, value, icon, type } = req.body;
+  getDb().prepare('UPDATE personal_data SET label = ?, value = ?, icon = ?, type = ? WHERE id = ?')
+    .run(label, value || '', icon || '', type || 'text', req.params.id);
+  syncJson();
+  res.json({ success: true });
+});
+
+router.delete('/personal-data/:id', (req, res) => {
+  getDb().prepare('DELETE FROM personal_data WHERE id = ?').run(req.params.id);
+  syncJson();
+  res.json({ success: true });
+});
+
 // ─── Photo Upload ───
 const multer = require('multer');
 const path = require('path');

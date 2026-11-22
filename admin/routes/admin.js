@@ -17,7 +17,7 @@ router.get('/dashboard', requireAuth, (req, res) => {
 });
 
 const pageRoutes = [
-  'profile', 'contact', 'social-media', 'skills', 'abilities',
+  'profile', 'contact', 'personal-data', 'social-media', 'skills', 'abilities',
   'experiences', 'education', 'certifications', 'projects', 'awards'
 ];
 

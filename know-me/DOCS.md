@@ -114,6 +114,7 @@ resume-asep/
 | `admin_users` | id, username, password_hash, created_at | Login admin |
 | `profile` | id, name, title, bio, photo_path, updated_at | Data diri |
 | `contact` | id, phone, email, location | Kontak |
+| `personal_data` | id, label, value, icon, type, sort_order | Data Saya (tanggal lahir, umur, tempat lahir, domisili, ...) — type: `text`/`date`/`age` |
 | `social_media` | id, platform, url, icon, sort_order | Sosial media |
 | `skills` | id, name, percentage, sort_order | Keahlian teknis |
 | `abilities` | id, name | Soft skills |

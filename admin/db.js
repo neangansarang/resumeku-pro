@@ -120,7 +120,26 @@ function initTables() {
       year TEXT NOT NULL DEFAULT '',
       sort_order INTEGER NOT NULL DEFAULT 0
     );
+
+    CREATE TABLE IF NOT EXISTS personal_data (
+      id INTEGER PRIMARY KEY AUTOINCREMENT,
+      label TEXT NOT NULL,
+      value TEXT NOT NULL DEFAULT '',
+      icon TEXT NOT NULL DEFAULT '',
+      type TEXT NOT NULL DEFAULT 'text',
+      sort_order INTEGER NOT NULL DEFAULT 0
+    );
   `);
+
+  // Seed: section "Data Saya" (hanya sekali, jika tabel masih kosong)
+  const pdCount = db.prepare('SELECT COUNT(*) AS n FROM personal_data').get().n;
+  if (pdCount === 0) {
+    const seedPd = db.prepare('INSERT INTO personal_data (label, value, icon, type, sort_order) VALUES (?, ?, ?, ?, ?)');
+    seedPd.run('Tanggal Lahir', '1994-09-21', 'fas fa-cake-candles', 'date', 1);
+    seedPd.run('Umur', '', 'fas fa-hourglass-half', 'age', 2);
+    seedPd.run('Tempat Lahir', 'Indramayu, Jawa Barat', 'fas fa-map-marker-alt', 'text', 3);
+    seedPd.run('Domisili', 'Bekasi', 'fas fa-house', 'text', 4);
+  }
 
   // Migrasi: tambahkan kolom whatsapp & telegram jika belum ada
   const cols = db.prepare("PRAGMA table_info(contact)").all().map(c => c.name);

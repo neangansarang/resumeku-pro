@@ -11,6 +11,15 @@ async function renderCV() {
   }
 }
 
+function formatDateID(iso) {
+  if (!iso) return '';
+  const d = new Date(iso + 'T00:00:00');
+  if (isNaN(d)) return iso;
+  const hari = ['Minggu', 'Senin', 'Selasa', 'Rabu', 'Kamis', 'Jumat', 'Sabtu'];
+  const bulan = ['Januari', 'Februari', 'Maret', 'April', 'Mei', 'Juni', 'Juli', 'Agustus', 'September', 'Oktober', 'November', 'Desember'];
+  return `${hari[d.getDay()]}, ${d.getDate()} ${bulan[d.getMonth()]} ${d.getFullYear()}`;
+}
+
 function renderSidebar(data) {
   const sidebar = document.getElementById('cv-sidebar');
   const p = data.profile || {};
@@ -33,6 +42,27 @@ function renderSidebar(data) {
     if (c.telegram) html += `<div class="contact-item"><i class="fab fa-telegram"></i> ${c.telegram}</div>`;
     if (c.email) html += `<div class="contact-item"><i class="fas fa-envelope"></i> ${c.email}</div>`;
     if (c.location) html += `<div class="contact-item"><i class="fas fa-map-marker-alt"></i> ${c.location}</div>`;
+    html += `</div>`;
+  }
+
+  // Personal Data (Data Saya)
+  const pd = data.personal_data || [];
+  if (pd.length) {
+    const birthRow = pd.find(r => r.type === 'date');
+    const ageText = (() => {
+      if (!birthRow || !birthRow.value) return '';
+      const y = parseInt(String(birthRow.value).slice(0, 4), 10);
+      return isNaN(y) ? '' : (new Date().getFullYear() - y) + ' Tahun';
+    })();
+    html += `<div class="sidebar-section"><div class="sidebar-section-title">// Data Saya</div>`;
+    pd.forEach(r => {
+      let val = '';
+      if (r.type === 'age') val = ageText;
+      else if (r.type === 'date') val = formatDateID(r.value);
+      else val = r.value || '';
+      if (!val) return;
+      html += `<div class="contact-item"><i class="${r.icon || 'fas fa-info-circle'}"></i> <span>${val}</span></div>`;
+    });
     html += `</div>`;
   }
 

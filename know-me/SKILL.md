@@ -97,6 +97,7 @@ Lebar tetap **248px** (dalam grid `.cv-card`), background `--sidebar-bg`. Berisi
 | Nama | `.sidebar-name` | Edit teks langsung |
 | Jabatan | `.sidebar-title` | Edit teks langsung |
 | Kontak | `.contact-item` (icon + teks) | Duplikasi/hapus `.contact-item` |
+| Data Saya | `.contact-item` (icon + `label: nilai`) | Dari `personal_data`; tipe `date` diformat "Rabu, 21 September 1994", tipe `age` dihitung otomatis (tahun sekarang − tahun lahir) |
 | Sosial media | `.social-grid > .social-item` | Grid 2 kolom, duplikasi item |
 | Keahlian teknis | `.skill-item` (bar progress) | Ubah `width:XX%` di style inline |
 | Kemampuan | `.ability-tag` (pill/badge) | Duplikasi/hapus `<span class="ability-tag">` |

@@ -15,6 +15,7 @@ function syncJson() {
   const certifications = db.prepare('SELECT name, issuer, link FROM certifications ORDER BY sort_order').all();
   const projects = db.prepare('SELECT name, description, tech_stack, link FROM projects ORDER BY sort_order').all();
   const awards = db.prepare('SELECT name, issuer, year FROM awards ORDER BY sort_order').all();
+  const personalData = db.prepare('SELECT label, value, icon, type FROM personal_data ORDER BY sort_order').all();
 
   const educationRows = db.prepare('SELECT * FROM education ORDER BY sort_order').all();
   const education = educationRows.map(e => ({
@@ -60,7 +61,8 @@ function syncJson() {
     education: education,
     certifications: certifications,
     projects: projects,
-    awards: awards
+    awards: awards,
+    personal_data: personalData
   };
 
   const dir = path.dirname(JSON_PATH);

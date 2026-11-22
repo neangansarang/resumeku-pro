@@ -73,6 +73,8 @@ body
     │       │   │   ├── .sidebar-title
     │       │   │   ├── .contact-section
     │       │   │   │   └── .contact-item × N
+    │       │   │   ├── .contact-section        (Kontak)
+    │       │   │   ├── .personal-data-section  (Data Saya — icon + label: nilai)
     │       │   │   ├── .social-section
     │       │   │   │   └── .social-grid > .social-item × N
     │       │   │   ├── .skills-section
