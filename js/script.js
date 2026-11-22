@@ -5,6 +5,16 @@ function switchPage(p, e) {
   e.currentTarget.classList.add('active');
 }
 
+/* ── NAVBAR: melebar selama konten tidak di paling atas, mengecil saat kembali ke atas ── */
+const navbarEl = document.querySelector('.navbar');
+const NAV_TOP_LIMIT = 24;   // di bawah ini (paling atas), navbar kembali ke kondisi semula
+
+window.addEventListener('scroll', () => {
+  const y = window.scrollY;
+  if (y > NAV_TOP_LIMIT) navbarEl.classList.add('expanded');
+  else navbarEl.classList.remove('expanded');
+}, { passive: true });
+
 const posts = [
   { img: 'src/images/blog-react.svg', category: 'Tutorial', title: 'Optimasi Performa React: Tips Mengurangi Re-render Berlebihan', excerpt: 'React memiliki mekanisme re-render yang bisa menjadi bumerang jika tidak dipahami dengan baik. Dalam artikel ini kita akan bahas useMemo, useCallback, dan React.memo secara praktis.', date: '10 Juni 2025', readTime: '8 menit', content: `<p>Salah satu keluhan terbesar developer React adalah aplikasi yang terasa lambat seiring bertambahnya kompleksitas komponen. Masalah utamanya sering kali adalah <strong>re-render yang tidak perlu</strong>.</p><h3>1. Memahami Penyebab Re-render</h3><p>Komponen React akan re-render ketika: (1) state-nya berubah, (2) props yang diterimanya berubah, atau (3) parent component-nya re-render. Poin ketiga sering diabaikan dan menjadi sumber masalah terbesar.</p><h3>2. React.memo – Memoize Komponen</h3><p>Gunakan <code>React.memo</code> untuk membungkus komponen agar hanya re-render ketika props-nya benar-benar berubah.</p><div class="modal-code">const MyComponent = React.memo(({ value }) => {\n  return &lt;div&gt;{value}&lt;/div&gt;;\n});</div><h3>3. useCallback – Stabilkan Referensi Fungsi</h3><p>Setiap render membuat instance fungsi baru. <code>useCallback</code> mempertahankan referensi fungsi selama dependency tidak berubah.</p><div class="modal-code">const handleClick = useCallback(() => {\n  doSomething(id);\n}, [id]);</div><h3>Kesimpulan</h3><p>Profil terlebih dahulu dengan React DevTools, baru optimasi di titik yang tepat. Jangan over-memoize!</p>` },
   { img: 'src/images/blog-docker.svg', category: 'DevOps', title: 'Docker untuk Developer: Dari Nol Sampai Deploy Production', excerpt: 'Docker mengubah cara kita membangun dan mendeploy aplikasi. Pelajari konsep container, image, docker-compose, dan strategi deployment yang solid dari artikel komprehensif ini.', date: '28 Mei 2025', readTime: '12 menit', content: `<p>Docker adalah teknologi containerisasi yang memungkinkan kita mengemas aplikasi beserta seluruh dependensinya ke dalam sebuah container yang ringan dan portabel.</p><h3>Mengapa Docker?</h3><ul><li><strong>Konsistensi lingkungan</strong> – "Works on my machine" tidak lagi jadi masalah</li><li><strong>Isolasi</strong> – Setiap layanan berjalan dalam sandbox-nya sendiri</li><li><strong>Skalabilitas</strong> – Mudah di-scale horizontal dengan orchestration tools</li></ul><h3>Membuat Dockerfile untuk Laravel</h3><div class="modal-code">FROM php:8.2-fpm\nWORKDIR /var/www\nCOPY . .\nRUN composer install --optimize-autoloader --no-dev\nEXPOSE 9000\nCMD ["php-fpm"]</div><h3>Tips Production</h3><ul><li>Gunakan multi-stage build untuk memperkecil ukuran image final</li><li>Simpan secret di environment variable, bukan di Dockerfile</li><li>Tambahkan health check pada setiap service</li></ul>` },
